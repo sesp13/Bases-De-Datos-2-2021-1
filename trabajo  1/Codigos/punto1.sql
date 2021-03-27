@@ -44,6 +44,8 @@ BEGIN
     --     DBMS_OUTPUT.PUT_LINE(cerdoArray(iterador).seleccionado);
     -- END LOOP;
 
+    --Sigue el proceso de llenado
+
 END; 
 /
 
