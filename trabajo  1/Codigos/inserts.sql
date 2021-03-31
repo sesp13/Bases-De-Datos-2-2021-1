@@ -4,6 +4,12 @@ nombre VARCHAR(20) NOT NULL,
 pesokilos NUMBER(8) NOT NULL CHECK (pesokilos > 0)
 );
 
+CREATE OR REPLACE TABLE cerdoAux(
+    cod NUMBER(8),
+    nombre VARCHAR(20),
+    pesokilos NUMBER(8),
+    seleccionado NUMBER(1)
+);
 
 -- Cerdos
 INSERT INTO cerdo VALUES(2, 'Ana Criado', 3);

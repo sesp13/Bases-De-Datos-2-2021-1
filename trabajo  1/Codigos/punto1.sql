@@ -1,11 +1,3 @@
-CREATE TABLE cerdoAux(
-    cod NUMBER(8),
-    nombre VARCHAR(20),
-    pesokilos NUMBER(8),
-    seleccionado NUMBER(1)
-);
-
-
 DECLARE
     -- Variable de entrada
     kilosPedidos NUMBER(10) := 8;
@@ -14,8 +6,22 @@ DECLARE
     camionesArray camionType;
     TYPE cerdoType IS TABLE OF cerdoAux%ROWTYPE INDEX BY BINARY_INTEGER;  
     cerdoArray cerdoType;
+    
     -- variables auxiliares
     i NUMBER(8) := 0;
+    TYPE t_num IS TABLE OF NUMBER(8) INDEX BY BINARY_INTEGER;
+    TYPE t_mat IS TABLE OF t_num INDEX BY BINARY_INTEGER;
+
+    --Variables para la funcion
+    b NUMBER(8) := 0;
+    s NUMBER(8) := 0;
+    xi NUMBER(8) := 0;
+    tamanoActual NUMBER(8) := 0;
+    arrayVacioAux t_num;
+    cln t_num;
+    selected t_num;
+    cols t_mat;
+
 BEGIN
     -- Llenado de camiones
     SELECT *  BULK COLLECT INTO camionesArray FROM camion ORDER BY maximacapacidadkilos  DESC;
@@ -26,7 +32,7 @@ BEGIN
 
     -- Llenado de cerdos
     -- Inicializar el contador auxiliar
-    i := 1;
+    i := 0;
     FOR cerdoFila IN (
         SELECT * 
         FROM cerdo
@@ -39,58 +45,67 @@ BEGIN
         i := i + 1;
     END LOOP;
 
-    
     -- FOR iterador IN 1 .. cerdoArray.COUNT LOOP 
     --     DBMS_OUTPUT.PUT_LINE(cerdoArray(iterador).seleccionado);
     -- END LOOP;
+
+    tamanoActual := camionesArray(1).maximacapacidadkilos;
+
+    -- Espacio de la funcion
+    b := 2 * tamanoActual;
+    -- Llenado del arreglo
+    FOR i IN 0 .. b - 1 LOOP 
+        cols(i)(0) := -20;
+    END LOOP;
+    -- Fin llenado del arreglo
+    cols(0)(0) := -1;
+
+    FOR i IN 0 .. cerdoArray.COUNT - 1 LOOP 
+        xi := cerdoArray(i).pesokilos;
+        -- DBMS_OUTPUT.PUT_LINE(xi);
+        s := b-xi-1;
+        LOOP
+            IF cols(s + xi)(0) = -20 AND cols(s)(0) != -20 THEN
+                cln := cols(s);
+                -- Agregar xi
+                cln(cln.COUNT) := xi;
+                cols(s + xi) := cln; 
+            END IF;
+            s := s -1;
+            EXIT WHEN s = -1;
+        END LOOP; 
+    END LOOP;
+    -- DBMS_OUTPUT.PUT_LINE(cols.COUNT);
+    -- DBMS_OUTPUT.PUT_LINE('----------------');
+
+    -- Fin Espacio de la funcion
+
+    -- Selected es el array que va a devolver la funcion
+    selected(0) := -20;
+    FOR i IN 0 .. tamanoActual - 1 LOOP 
+        -- DBMS_OUTPUT.PUT_LINE('PUTO 1 ENTRANDO');
+        IF cols(tamanoActual - i)(0) != -20 THEN 
+            -- DBMS_OUTPUT.PUT_LINE('PUTO 1');
+            selected := cols(tamanoActual - i);
+            EXIT;
+        ELSIF cols(tamanoActual + i)(0) != -20 THEN 
+            -- DBMS_OUTPUT.PUT_LINE('PUTO 2');
+            selected := cols(tamanoActual + i);
+            EXIT;
+        END IF;
+    END LOOP;
+
+    IF selected(0) = -20 THEN 
+        -- DBMS_OUTPUT.PUT_LINE('PUTO');
+        selected := cols(0);
+    END IF;
+    
+    -- Ver los elementos del arreglo resultante
+    FOR i IN 0..selected.COUNT - 1 LOOP
+        DBMS_OUTPUT.PUT_LINE(selected(i));
+    END LOOP;
 
     --Sigue el proceso de llenado
 
 END; 
 /
-
-//Notas y cosas varias
-Podriamos guardar 
-
-Guardar en arrays 
-1. los camiones ordenados descendientemente
-2. Los cerdos ordenados 
-
-CONSULTA DE CAMIONES 
-SELECT * FROM camion ORDER BY maximacapacidadkilos  DESC
-
-CREAR UNA TABLA CON LAS 4 COLUMNAS PARA LOS cerdos
-
-CERDOS SELECCIONADOS
-SELECT cod, nombre, pesokilos, 0 as "Seleccionado" 
-FROM cerdo
-ORDER BY pesokilos asc;
-
-LLenado de un array 
-    CON FOR 
-    FOR camionFila IN (SELECT * FROM camion ORDER BY maximacapacidadkilos  DESC) LOOP
-        camionesArray(i) := camionFila;
-        i := i +1;
-    END LOOP;
-
-    CON BULK COLLECT (OJO el indice inicia en 1)
-        SELECT *  BULK COLLECT INTO camionesArray FROM camion ORDER BY maximacapacidadkilos  DESC;
-    
-
-
-
-Recorrer un array 
-
-    Creado normal
-
-    FOR iterador IN 0 .. camionesArray.COUNT - 1 LOOP 
-        DBMS_OUTPUT.PUT_LINE(camionesArray(iterador).idcamion);
-    END LOOP;
-
-camionesArray(iterador) es un resultado de la tabla
-
-    Con bulkcollect
-    
-    FOR iterador IN 1 .. camionesArray.COUNT LOOP 
-        DBMS_OUTPUT.PUT_LINE(camionesArray(iterador).idcamion);
-    END LOOP; 
