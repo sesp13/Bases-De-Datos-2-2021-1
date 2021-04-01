@@ -20,6 +20,7 @@ DECLARE
 
     --Variables para la funcion
     K t_mat;
+    arrayOptimo t_num;
 
 BEGIN
     -- Llenado de camiones
@@ -48,11 +49,10 @@ BEGIN
     --     DBMS_OUTPUT.PUT_LINE(cerdoArray(iterador).seleccionado);
     -- END LOOP;
 
-    -- tamanoActual := camionesArray(1).maximacapacidadkilos;
-    tamanoActual := 10;
+    tamanoActual := camionesArray(1).maximacapacidadkilos;
+    -- tamanoActual := 20;
 
     -- Funcion de seleccion
-
     -- Inicializar K
     FOR i IN 0 .. cerdoArray.COUNT LOOP
         FOR j IN 0 .. tamanoActual LOOP
@@ -82,14 +82,41 @@ BEGIN
     END LOOP;
 
     -- Tamaño optimo de knapsack
-    -- DBMS_OUTPUT.PUT_LINE(K(cerdoArray.COUNT)(tamanoActual));
+    DBMS_OUTPUT.PUT_LINE('Tamaño optimo ' || K(cerdoArray.COUNT)(tamanoActual));
+    DBMS_OUTPUT.PUT_LINE('--------------------');
+    
+    --  Ciclo para armar el arreglo optimo
+    i := cerdoArray.COUNT;
+    j := tamanoActual;
+    LOOP 
+        -- DBMS_OUTPUT.PUT_LINE('i ' || i);
+        -- DBMS_OUTPUT.PUT_LINE('j ' || j);
 
-    -- FIN FUNCION DE SELECCION
+        -- Valor actual
+        aux1 := K(i)(j);
+        -- Fila anterior misma columna 
+        aux2 := K(i-1)(j);
 
-    -- Pruebas, borrar despues
-    FOR i IN 0 .. cerdoArray.COUNT LOOP 
-        DBMS_OUTPUT.PUT_LINE(K(i)(tamanoActual));
+        IF aux1 = aux2 THEN 
+            -- No agrego el peso actual
+            i := i - 1;
+            j := j;
+        ELSE 
+            -- Agrego el peso actual 
+            arrayOptimo(arrayOptimo.COUNT) := cerdoArray(i - 1).pesokilos;    
+            j := j - cerdoArray(i - 1).pesokilos;
+            i := i - 1;
+        END IF; 
+
+        EXIT WHEN i = 0;
+    END LOOP; 
+
+    -- Recorrer el array optimo
+    DBMS_OUTPUT.PUT_LINE('------ El optimo es ----------');
+    FOR i IN 0 .. arrayOptimo.COUNT - 1 LOOP 
+        DBMS_OUTPUT.PUT_LINE(arrayOptimo(i));
     END LOOP;
+    -- FIN FUNCION DE SELECCION
 
 END; 
 /
