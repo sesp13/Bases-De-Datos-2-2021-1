@@ -1,0 +1,18 @@
+-- Permisos para el usuario primera vez
+
+-- CREATE USER nom_usu IDENTIFIED BY mi_contraseña;
+CREATE USER admin IDENTIFIED BY admin;
+
+-- GRANT CONNECT, RESOURCE TO nom_usu;
+GRANT CONNECT, RESOURCE TO admin;
+
+-- GRANT CREATE ANY TABLE TO nom_usu;
+GRANT CREATE ANY TABLE TO admin;
+
+-- GRANT CREATE ANY PROCEDURE TO nom_usu;
+GRANT CREATE ANY PROCEDURE TO admin;
+
+-- GRANT CREATE ANY VIEW TO nom_usu;
+GRANT CREATE ANY VIEW TO admin;
+
+

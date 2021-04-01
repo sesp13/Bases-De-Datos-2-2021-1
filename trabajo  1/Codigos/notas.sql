@@ -1,4 +1,7 @@
-//Notas y cosas varias
+-- PRENDER la consola
+SET SERVEROUTPUT ON
+
+-- Notas y cosas varias
 Podriamos guardar 
 
 Guardar en arrays 
@@ -44,5 +47,3 @@ camionesArray(iterador) es un resultado de la tabla
         DBMS_OUTPUT.PUT_LINE(camionesArray(iterador).idcamion);
     END LOOP; 
 
-PRENDER la consola
-SET SERVEROUTPUT ON

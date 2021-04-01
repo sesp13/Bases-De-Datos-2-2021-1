@@ -11,13 +11,13 @@ DECLARE
     i NUMBER(8) := 0;
     TYPE t_num IS TABLE OF NUMBER(8) INDEX BY BINARY_INTEGER;
     TYPE t_mat IS TABLE OF t_num INDEX BY BINARY_INTEGER;
+    arrayVacioAux t_num;
+    tamanoActual NUMBER(8) := 0;
 
     --Variables para la funcion
     b NUMBER(8) := 0;
     s NUMBER(8) := 0;
     xi NUMBER(8) := 0;
-    tamanoActual NUMBER(8) := 0;
-    arrayVacioAux t_num;
     cln t_num;
     selected t_num;
     cols t_mat;
@@ -49,9 +49,10 @@ BEGIN
     --     DBMS_OUTPUT.PUT_LINE(cerdoArray(iterador).seleccionado);
     -- END LOOP;
 
-    tamanoActual := camionesArray(1).maximacapacidadkilos;
+    -- tamanoActual := camionesArray(1).maximacapacidadkilos;
+    tamanoActual := 10;
 
-    -- Espacio de la funcion
+    -- Espacio de la funcion de seleccion
     b := 2 * tamanoActual;
     -- Llenado del arreglo
     FOR i IN 0 .. b - 1 LOOP 
@@ -104,8 +105,6 @@ BEGIN
     FOR i IN 0..selected.COUNT - 1 LOOP
         DBMS_OUTPUT.PUT_LINE(selected(i));
     END LOOP;
-
-    --Sigue el proceso de llenado
-
+    -- FIN FUNCION DE SELECCION
 END; 
 /
