@@ -49,8 +49,8 @@ BEGIN
     --     DBMS_OUTPUT.PUT_LINE(cerdoArray(iterador).seleccionado);
     -- END LOOP;
 
-    tamanoActual := camionesArray(1).maximacapacidadkilos;
-    -- tamanoActual := 20;
+    -- tamanoActual := camionesArray(1).maximacapacidadkilos;
+    tamanoActual := 9;
 
     -- Funcion de seleccion
     -- Inicializar K
@@ -104,6 +104,7 @@ BEGIN
         ELSE 
             -- Agrego el peso actual 
             arrayOptimo(arrayOptimo.COUNT) := cerdoArray(i - 1).pesokilos;    
+            DBMS_OUTPUT.PUT_LINE(cerdoArray(i - 1).nombre);
             j := j - cerdoArray(i - 1).pesokilos;
             i := i - 1;
         END IF; 

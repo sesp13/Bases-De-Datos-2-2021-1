@@ -24,8 +24,8 @@ select * from cerdo;
 --Cerdos custom
 delete from cerdo;
 INSERT INTO cerdo VALUES(2, 'Ana Criado', 1);
-INSERT INTO cerdo VALUES(4, 'Dua Lipa', 1);
-INSERT INTO cerdo VALUES(11, 'Ava Max', 8);
+INSERT INTO cerdo VALUES(4, 'Dua Lipa', 2);
+INSERT INTO cerdo VALUES(11, 'Ava Max', 4);
 INSERT INTO cerdo VALUES(8, 'Saffron', 9);
 INSERT INTO cerdo VALUES(88, 'Saffron', 10);
 select * from cerdo;
