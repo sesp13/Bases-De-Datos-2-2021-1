@@ -1,6 +1,6 @@
 DECLARE
     -- Variable de entrada
-    kilosPedidos NUMBER(10) := 20;
+    kilosPedidos NUMBER(10) := 12;
     -- Fin Variable de entrada
     TYPE camionType IS TABLE OF camion%ROWTYPE INDEX BY BINARY_INTEGER;  
     camionesArray camionType;
@@ -70,8 +70,14 @@ BEGIN
     IF camionesArray.COUNT = 0 THEN 
         -- No hay camiones
         DBMS_OUTPUT.PUT_LINE('El pedido no se puede satisfacer');
+    ELSIF cerdoArray.COUNT = 0 THEN
+        -- No hay cerdos
+        DBMS_OUTPUT.PUT_LINE('El pedido no se puede satisfacer');
     ELSIF cerdoArray(0).pesokilos > kilosPedidos THEN
         -- Todos los cerdos son más pesados que el requisito inicial
+        DBMS_OUTPUT.PUT_LINE('El pedido no se puede satisfacer');
+    ELSIF cerdoArray(0).pesokilos >  camionesArray(0).maximacapacidadkilos THEN 
+        -- Los cerdos son mas pesados que los camiones
         DBMS_OUTPUT.PUT_LINE('El pedido no se puede satisfacer');
     ELSE
         -- Flujo normal
@@ -91,12 +97,13 @@ BEGIN
             -- j sera la variable auxiliar con la que llenemos el array de seleccionados;
             j := 0;
             FOR i IN 0 .. cerdoArray.COUNT - 1 LOOP
-                -- DBMS_OUTPUT.PUT_LINE('PESO ' || cerdoArray(i).nombre || ' ' || cerdoArray(i).seleccionado);
+                -- DBMS_OUTPUT.PUT_LINE('PESO ' || cerdoArray(i).cod || ' ' || cerdoArray(i).nombre || ' ' || cerdoArray(i).seleccionado);
                 IF cerdoArray(i).seleccionado = 0 THEN 
                     cerdosPosibles(j) := cerdoArray(i);
                     j := j + 1;
                 END IF;
             END LOOP;
+            -- DBMS_OUTPUT.PUT_LINE('/////////////////////////////////');
 
             -- -- ///////////////// Funcion de seleccion /////////////////////
             -- Inicializar K
@@ -161,7 +168,9 @@ BEGIN
             -- Actualizar la lista de cerdos e imprimir la respuesta
             IF cerdosOptimos.COUNT = 0 THEN 
                 -- Caso No hay combinacion óptima
-                DBMS_OUTPUT.PUT_LINE('No hay cerdos que satisfagan la solucion');
+                DBMS_OUTPUT.PUT_LINE('No hay cerdos que satisfagan la solucion Interno');
+                -- Como no hay solucion optima significa que los cerdos que quedan son muy pesados para el peso de los camiones Por lo que termino el proceso
+                EXIT;
             ELSE 
                 -- Flujo normal
 
@@ -173,8 +182,10 @@ BEGIN
                 -- Contador para cerdosOptimos
                 FOR i IN 0 .. cerdosOptimos.COUNT - 1 LOOP
                     FOR j IN 0 .. cerdoArray.COUNT - 1 LOOP 
-                        IF cerdoArray(j).cod = cerdosOptimos(i).cod THEN 
-                            cerdoArray(i).seleccionado := 1;
+                        IF cerdoArray(j).cod = cerdosOptimos(i).cod THEN
+                            -- DBMS_OUTPUT.PUT_LINE('CAMBIO DE PLANES ' || cerdosOptimos(i).cod || ' ' || cerdosOptimos(i).nombre || ' ' || cerdosOptimos(i).seleccionado);
+                            cerdoArray(j).seleccionado := 1;
+                            -- DBMS_OUTPUT.PUT_LINE('CAMBIO DE PLANES R ' || cerdosOptimos(i).cod || ' ' || cerdosOptimos(i).nombre || ' ' || cerdosOptimos(i).seleccionado);
                             aux1String := aux1String 
                                 || ' ' 
                                 || cerdosOptimos(i).cod 
@@ -193,6 +204,7 @@ BEGIN
                     END LOOP;
                 END LOOP;
 
+                -- DBMS_OUTPUT.PUT_LINE('xxxxxxxxxxxxxxxxxxxxxxxxxxx');
                 DBMS_OUTPUT.PUT_LINE(aux1String);
                 aux1String := 'Total peso cerdos: ' || capacidadUsada || 'Kg.';
                 -- aux1 aca es la resta de la maxima capacidad del camion menos la usada 

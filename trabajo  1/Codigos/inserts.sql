@@ -23,17 +23,23 @@ select * from cerdo;
 
 --Cerdos custom
 delete from cerdo;
-INSERT INTO cerdo VALUES(2, 'Ana Criado', 18);
-INSERT INTO cerdo VALUES(4, 'Dua Lipa', 5);
-INSERT INTO cerdo VALUES(11, 'Ava Max', 5);
-INSERT INTO cerdo VALUES(112, 'Ava Max 2', 10);
-INSERT INTO cerdo VALUES(8, 'Saffron', 5);
-INSERT INTO cerdo VALUES(88, 'Saffron 2', 5);
-INSERT INTO cerdo VALUES(1, 'Un1co', 1);
-INSERT INTO cerdo VALUES(113, 'Un2co', 2);
-INSERT INTO cerdo VALUES(1114, 'Un3co', 4);
-INSERT INTO cerdo VALUES(3839, 'MIA', 7);
-select * from cerdo;
+INSERT INTO cerdo VALUES(2, 'Ana Criado', 10);
+INSERT INTO cerdo VALUES(4, 'Dua Lipa', 15);
+-- INSERT INTO cerdo VALUES(11, 'Ava Max', 5);
+-- INSERT INTO cerdo VALUES(112, 'Ava Max 2', 10);
+-- INSERT INTO cerdo VALUES(8, 'Saffron', 5);
+-- INSERT INTO cerdo VALUES(88, 'Saffron 2', 5);
+-- INSERT INTO cerdo VALUES(1, 'Un1co', 1);
+-- INSERT INTO cerdo VALUES(113, 'Un2co', 2);
+-- INSERT INTO cerdo VALUES(1114, 'Un3co', 4);
+-- INSERT INTO cerdo VALUES(3839, 'MIA', 7);
+-- INSERT INTO cerdo VALUES(3838, 'MIA 2', 12);
+-- INSERT INTO cerdo VALUES(3837, 'MIA 3', 28);
+-- INSERT INTO cerdo VALUES(3836, 'MIA 4', 3);
+-- INSERT INTO cerdo VALUES(3835, 'MIA 5', 40);
+-- INSERT INTO cerdo VALUES(3834, 'MIA 4', 70);
+-- INSERT INTO cerdo VALUES(3833, 'MIA 2', 1);
+select * from cerdo order by pesokilos asc;
 
 CREATE TABLE camion(
 idcamion NUMBER(8) PRIMARY KEY,
@@ -44,3 +50,14 @@ maximacapacidadkilos NUMBER(8) NOT NULL CHECK (maximacapacidadkilos > 0)
 INSERT INTO camion VALUES(13, 10);
 INSERT INTO camion VALUES(38, 7);
 INSERT INTO camion VALUES(22, 8);
+
+
+-- Caminones custom
+delete from camion;
+INSERT INTO camion VALUES(13, 7);
+INSERT INTO camion VALUES(38, 7);
+-- INSERT INTO camion VALUES(23, 1);
+-- INSERT INTO camion VALUES(24, 2);
+-- INSERT INTO camion VALUES(27, 35);
+-- INSERT INTO camion VALUES(28, 20);
+select * from camion order by maximacapacidadkilos desc;
