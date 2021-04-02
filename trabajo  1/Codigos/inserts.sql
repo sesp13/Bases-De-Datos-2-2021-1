@@ -23,11 +23,16 @@ select * from cerdo;
 
 --Cerdos custom
 delete from cerdo;
-INSERT INTO cerdo VALUES(2, 'Ana Criado', 1);
-INSERT INTO cerdo VALUES(4, 'Dua Lipa', 2);
-INSERT INTO cerdo VALUES(11, 'Ava Max', 4);
-INSERT INTO cerdo VALUES(8, 'Saffron', 9);
-INSERT INTO cerdo VALUES(88, 'Saffron', 10);
+INSERT INTO cerdo VALUES(2, 'Ana Criado', 18);
+INSERT INTO cerdo VALUES(4, 'Dua Lipa', 5);
+INSERT INTO cerdo VALUES(11, 'Ava Max', 5);
+INSERT INTO cerdo VALUES(112, 'Ava Max 2', 10);
+INSERT INTO cerdo VALUES(8, 'Saffron', 5);
+INSERT INTO cerdo VALUES(88, 'Saffron 2', 5);
+INSERT INTO cerdo VALUES(1, 'Un1co', 1);
+INSERT INTO cerdo VALUES(113, 'Un2co', 2);
+INSERT INTO cerdo VALUES(1114, 'Un3co', 4);
+INSERT INTO cerdo VALUES(3839, 'MIA', 7);
 select * from cerdo;
 
 CREATE TABLE camion(

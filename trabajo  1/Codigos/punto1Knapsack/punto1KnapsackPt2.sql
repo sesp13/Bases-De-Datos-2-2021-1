@@ -1,6 +1,6 @@
 DECLARE
     -- Variable de entrada
-    kilosPedidos NUMBER(10) := 16;
+    kilosPedidos NUMBER(10) := 20;
     -- Fin Variable de entrada
     TYPE camionType IS TABLE OF camion%ROWTYPE INDEX BY BINARY_INTEGER;  
     camionesArray camionType;
@@ -25,11 +25,12 @@ DECLARE
     --Variables para la funcion de seleccion
     K t_mat;
     cerdosOptimos cerdoType;
-
-    --Variables para el control de flujo de la aplicacion
     cerdosPosibles cerdoType;
     tamanoActual NUMBER(8) := 0;
     capacidadUsada NUMBER(8) := 0;
+
+    --Variables para el control de flujo de la aplicacion
+    kilosTotales NUMBER(10) := 0;
 
 BEGIN
     -- Llenado de camiones
@@ -61,6 +62,9 @@ BEGIN
     -- FOR iterador IN 1 .. cerdoArray.COUNT LOOP 
     --     DBMS_OUTPUT.PUT_LINE(cerdoArray(iterador).seleccionado);
     -- END LOOP;
+    
+    DBMS_OUTPUT.PUT_LINE('Informe para Mi Cerdito');
+    DBMS_OUTPUT.PUT_LINE('-----------------------');
 
     -- Controles iniciales
     IF camionesArray.COUNT = 0 THEN 
@@ -195,11 +199,14 @@ BEGIN
                 aux1 := camionesArray(camionI).maximacapacidadkilos - capacidadUsada;
 
                 aux1String :=  aux1String 
-                    ||  'Capacidad no usada del camion: ' 
+                    ||  ' Capacidad no usada del camion: ' 
                     ||   aux1
                     ||  'Kg.';
                 -- Imprimir la capacidad no usada del camion
                 DBMS_OUTPUT.PUT_LINE(aux1String);
+
+                -- Sumar al contador total los kilos que lleva este camion
+                kilosTotales := kilosTotales + capacidadUsada;
 
                 DBMS_OUTPUT.PUT_LINE('-----------------------------');    
                 -- Controlar el peso restante para la capacidad solicitada
@@ -217,6 +224,13 @@ BEGIN
 
 
         END LOOP;
+
+        -- Imprimir el informe final
+        --  Aca aux 2 representa los kilos no satisfechos
+         aux2 := kilosPedidos - kilosTotales;
+         aux1String := 'Total peso solicitado: ' || kilosPedidos || 'Kg. Peso real enviado: '
+         || kilosTotales || 'Kg. Peso no satisfecho ' || aux2 || 'Kg.';                
+         DBMS_OUTPUT.PUT_LINE(aux1String);    
 
     END IF;
 END; 
