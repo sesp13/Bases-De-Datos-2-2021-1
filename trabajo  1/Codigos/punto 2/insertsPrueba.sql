@@ -14,9 +14,33 @@ DELETE FROM individuo;
 SELECT * FROM individuo;
 
 INSERT INTO individuo VALUES (
+    1,
+    'Saimon',
+    23,
+    NULL,
+    89
+);
+
+INSERT INTO individuo VALUES (
     2,
     'SAUL',
     23,
     NULL,
+    NULL
+);
+
+INSERT INTO individuo VALUES (
+    3,
+    'Kim',
+    10,
+    2,
+    NULL
+);
+
+INSERT INTO individuo VALUES (
+    4,
+    'Jesse',
+    56,
+    2,
     NULL
 );

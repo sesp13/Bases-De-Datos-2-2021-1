@@ -2,8 +2,6 @@
 CREATE OR REPLACE TRIGGER numeroHijosCero
 BEFORE INSERT ON individuo
 FOR EACH ROW
-DECLARE
-    numeroHijos NUMBER(8);
 BEGIN 
     :NEW.nro_hijos := 0;
 END;
