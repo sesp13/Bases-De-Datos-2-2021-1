@@ -4,7 +4,6 @@ COMPOUND TRIGGER
 -- Variables
 TYPE individuoType IS TABLE OF individuo%ROWTYPE INDEX BY BINARY_INTEGER;  
 individuosArray individuoType;
--- TYPE t_num IS TABLE OF individuo.padre%TYPE INDEX BY BINARY_INTEGER;  
 TYPE t_num IS TABLE OF NUMBER(8) INDEX BY BINARY_INTEGER;  
 arrayPadresNoNulos t_num;
 eliminados t_num;
@@ -20,6 +19,15 @@ BEFORE STATEMENT IS BEGIN
     i := 0;
     FOR individuoFila IN (SELECT * FROM individuo) LOOP 
         individuosArray(i) := individuoFila;
+        -- Mapear los campos en la tabla auxiliar
+        INSERT INTO individuoAux VALUES(
+            individuoFila.codigo,
+            individuoFila.nombre,
+            individuoFila.valor,
+            individuoFila.padre,
+            individuoFila.nro_hijos
+        );
+        i := i + 1;
     END LOOP;
 
     -- Actualizo todos los padres de individuos en nulo
@@ -30,13 +38,8 @@ BEFORE STATEMENT IS BEGIN
 END BEFORE STATEMENT;
 
 BEFORE EACH ROW IS BEGIN
-
-    IF :OLD.padre IS NOT NULL THEN            
-        -- Agregar Codigo de padre a modificar
-        arrayPadresNoNulos(arrayPadresNoNulos.COUNT) := :OLD.padre;
-        --Agregar codigo de registro eliminado
-        eliminados(eliminados.COUNT) := :OLD.codigo;
-    END IF;
+    -- Agregar registro a eliminar
+    eliminados(eliminados.COUNT) := :OLD.codigo;
 END BEFORE EACH ROW;
 
 AFTER STATEMENT IS BEGIN
@@ -53,7 +56,6 @@ AFTER STATEMENT IS BEGIN
         
         IF aux1 > 0 THEN 
             -- retornar la tabla a su estado original con los que aun existan
-            -- RAISE_APPLICATION_ERROR(-20506, individuosArray(i).codigo || ' '|| individuosArray(i).padre);
             UPDATE individuo
             SET padre = individuosArray(i).padre
             WHERE codigo = individuosArray(i).codigo;
@@ -63,19 +65,26 @@ AFTER STATEMENT IS BEGIN
 
     -- Cuando un individuo se borra y tiene padre no nulo, entonces a su padre se 
     -- le debe decrementar el atributo nro_hijos en una unidad.
-    FOR i IN 0 .. arrayPadresNoNulos.COUNT - 1 LOOP
+    FOR i IN 0 .. eliminados.COUNT - 1 LOOP
 
-        -- aux 1 es el numero de registros de individuos con el codigo del padre
-        SELECT COUNT(codigo) INTO aux1 
-        FROM individuo 
-        WHERE codigo = arrayPadresNoNulos(i);
+        -- aux 1 es el codigo del padre del individuo eliminado
+        SELECT padre INTO aux1 
+        FROM individuoAux
+        WHERE codigo = eliminados(i);
+        -- RAISE_APPLICATION_ERROR(-20506, arrayPadresNoNulos(i) || ' ' || aux1);
+
+        -- aux 2 es el numero de registros de individuos con el codigo del padre
+        SELECT COUNT(codigo) INTO aux2
+        FROM individuo
+        WHERE codigo = aux1;
+
 
         -- Verificar que el padre aun exista
-        IF aux1 > 0 THEN
+        IF aux2 > 0 THEN
             -- Flujo normal
             SELECT nro_hijos INTO hijosPadre
             FROM individuo
-            WHERE codigo = arrayPadresNoNulos(i);
+            WHERE codigo = aux1;
 
             -- Hijos padre es la cantidad de hijos que tenia el padre menos uno del eliminado
             hijosPadre := hijosPadre - 1;
@@ -86,28 +95,13 @@ AFTER STATEMENT IS BEGIN
             -- Actualizar la tabla de individuos con el array de padres
             UPDATE individuo
             SET nro_hijos = hijosPadre
-            WHERE codigo = arrayPadresNoNulos(i);
+            WHERE codigo = aux1;
         END IF;
 
     END LOOP;
 
-    -- Cuando un individuo se borra y tiene hijos, entonces 
-    -- a todos sus hijos se les debe poner su atributo padre en nulo.
-    -- FOR i IN 0 .. eliminados.COUNT - 1 LOOP 
-    --     -- RAISE_APPLICATION_ERROR(-20506, eliminados(i));
-
-    --     -- Ver todos los hijos que aun existan del registro eliminado
-    --     FOR hijoFila IN (SELECT * FROM individuo WHERE padre = eliminados(i)) LOOP 
-
-    --         -- Actualizar el padre del hijo
-    --         UPDATE individuo
-    --         SET padre = NULL 
-    --         WHERE codigo = hijoFila.codigo;     
-
-    --     END LOOP;
-
-    -- END LOOP;
-
+    -- Eliminar los registros de individuoAux
+    DELETE FROM individuoAux;
 
 END AFTER STATEMENT;
 

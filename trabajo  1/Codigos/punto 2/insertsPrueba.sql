@@ -45,7 +45,7 @@ INSERT INTO individuo VALUES (
     NULL
 );
 
-DELETE FROM individuo WHERE codigo = 4; 
+DELETE FROM individuo WHERE codigo = 2; 
 
 UPDATE individuo 
 SET padre = 2
