@@ -1,6 +1,6 @@
 DECLARE
     -- Variable de entrada
-    kilosPedidos NUMBER(10) := 12;
+    kilosPedidos NUMBER(10) := 29;
     -- Fin Variable de entrada
     TYPE camionType IS TABLE OF camion%ROWTYPE INDEX BY BINARY_INTEGER;  
     camionesArray camionType;

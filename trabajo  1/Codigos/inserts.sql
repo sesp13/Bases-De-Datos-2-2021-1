@@ -24,9 +24,9 @@ select * from cerdo;
 --Cerdos custom
 delete from cerdo;
 INSERT INTO cerdo VALUES(2, 'Ana Criado', 10);
-INSERT INTO cerdo VALUES(4, 'Dua Lipa', 15);
--- INSERT INTO cerdo VALUES(11, 'Ava Max', 5);
--- INSERT INTO cerdo VALUES(112, 'Ava Max 2', 10);
+INSERT INTO cerdo VALUES(4, 'Dua Lipa', 4);
+INSERT INTO cerdo VALUES(11, 'Ava Max', 15);
+INSERT INTO cerdo VALUES(112, 'Ava Max 2', 5);
 -- INSERT INTO cerdo VALUES(8, 'Saffron', 5);
 -- INSERT INTO cerdo VALUES(88, 'Saffron 2', 5);
 -- INSERT INTO cerdo VALUES(1, 'Un1co', 1);
@@ -54,10 +54,10 @@ INSERT INTO camion VALUES(22, 8);
 
 -- Caminones custom
 delete from camion;
-INSERT INTO camion VALUES(13, 7);
-INSERT INTO camion VALUES(38, 7);
--- INSERT INTO camion VALUES(23, 1);
--- INSERT INTO camion VALUES(24, 2);
--- INSERT INTO camion VALUES(27, 35);
+INSERT INTO camion VALUES(13, 10);
+INSERT INTO camion VALUES(38, 15);
+INSERT INTO camion VALUES(23, 9);
+-- INSERT INTO camion VALUES(24, 13);
+-- INSERT INTO camion VALUES(27, 3);
 -- INSERT INTO camion VALUES(28, 20);
 select * from camion order by maximacapacidadkilos desc;
