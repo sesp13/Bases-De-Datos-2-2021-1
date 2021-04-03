@@ -44,3 +44,11 @@ INSERT INTO individuo VALUES (
     2,
     NULL
 );
+
+DELETE FROM individuo WHERE codigo = 4; 
+
+UPDATE individuo 
+SET padre = 2
+WHERE padre = 8;
+
+SELECT COUNT(codigo) FROM individuo WHERE codigo = NULL;
