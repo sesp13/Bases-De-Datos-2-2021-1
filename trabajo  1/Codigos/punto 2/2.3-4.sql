@@ -78,7 +78,6 @@ AFTER STATEMENT IS BEGIN
         FROM individuo
         WHERE codigo = aux1;
 
-
         -- Verificar que el padre aun exista
         IF aux2 > 0 THEN
             -- Flujo normal

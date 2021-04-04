@@ -168,7 +168,7 @@ BEGIN
             -- Actualizar la lista de cerdos e imprimir la respuesta
             IF cerdosOptimos.COUNT = 0 THEN 
                 -- Caso No hay combinacion óptima
-                DBMS_OUTPUT.PUT_LINE('No hay cerdos que satisfagan la solucion Interno');
+                -- DBMS_OUTPUT.PUT_LINE('No hay cerdos que satisfagan la solucion Interno');
                 -- Como no hay solucion optima significa que los cerdos que quedan son muy pesados para el peso de los camiones Por lo que termino el proceso
                 EXIT;
             ELSE 
@@ -205,8 +205,12 @@ BEGIN
                 END LOOP;
 
                 -- DBMS_OUTPUT.PUT_LINE('xxxxxxxxxxxxxxxxxxxxxxxxxxx');
-                DBMS_OUTPUT.PUT_LINE(aux1String);
+                -- Mostrar informe de cerdos
+                DBMS_OUTPUT.PUT_LINE(aux1String);}
+
+                -- Recolectar datos para el informe final del camion
                 aux1String := 'Total peso cerdos: ' || capacidadUsada || 'Kg.';
+
                 -- aux1 aca es la resta de la maxima capacidad del camion menos la usada 
                 aux1 := camionesArray(camionI).maximacapacidadkilos - capacidadUsada;
 
