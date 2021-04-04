@@ -14,10 +14,3 @@ valor NUMBER(8),
 padre NUMBER(8),
 nro_hijos NUMBER(8)
 );
-
--- Crear esta tabla auxiliar
-DROP TABLE individuoHijosType;
-CREATE TABLE individuoHijosType(
-    codigo NUMBER(8),
-    nro_hijos NUMBER(8) 
-);

@@ -2,8 +2,6 @@ CREATE OR REPLACE TRIGGER eliminaHijos
 FOR DELETE ON individuo
 COMPOUND TRIGGER
 -- Variables
-TYPE individuoType IS TABLE OF individuo%ROWTYPE INDEX BY BINARY_INTEGER;  
-individuosArray individuoType;
 TYPE t_num IS TABLE OF NUMBER(8) INDEX BY BINARY_INTEGER;  
 arrayPadresNoNulos t_num;
 eliminados t_num;
@@ -11,15 +9,11 @@ hijosPadre individuo.nro_hijos%TYPE;
 aux1 NUMBER(8); 
 aux2 NUMBER(8); 
 i NUMBER; 
-j NUMBER; 
 
 BEFORE STATEMENT IS BEGIN
 
     -- Guardo todos los registros de individuos viejos en un arreglo
-    i := 0;
     FOR individuoFila IN (SELECT * FROM individuo) LOOP 
-        individuosArray(i) := individuoFila;
-        -- Mapear los campos en la tabla auxiliar
         INSERT INTO individuoAux VALUES(
             individuoFila.codigo,
             individuoFila.nombre,
@@ -27,7 +21,6 @@ BEFORE STATEMENT IS BEGIN
             individuoFila.padre,
             individuoFila.nro_hijos
         );
-        i := i + 1;
     END LOOP;
 
     -- Actualizo todos los padres de individuos en nulo
@@ -48,17 +41,17 @@ AFTER STATEMENT IS BEGIN
     -- a todos sus hijos se les debe poner su atributo padre en nulo.
 
     --  Volver a individuos a su estado original siempre y cuando su padre exista
-    FOR i IN 0 .. individuosArray.COUNT - 1 LOOP 
+    FOR individuoAuxFila IN (SELECT * FROM individuoAux) LOOP 
 
         SELECT COUNT(codigo) INTO aux1 
         FROM individuo 
-        WHERE codigo = individuosArray(i).padre;
+        WHERE codigo = individuoAuxFila.padre;
         
         IF aux1 > 0 THEN 
             -- retornar la tabla a su estado original con los que aun existan
             UPDATE individuo
-            SET padre = individuosArray(i).padre
-            WHERE codigo = individuosArray(i).codigo;
+            SET padre = individuoAuxFila.padre
+            WHERE codigo = individuoAuxFila.codigo;
         END IF;
 
     END LOOP;
