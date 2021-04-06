@@ -58,8 +58,30 @@ AFTER STATEMENT IS BEGIN
                     SET padre = codigosArray(i).codigoNuevo
                     WHERE codigo = individuoAuxFila.codigo;
                     -- Terminar ciclo
-                    EXIT;
+                    -- EXIT;
                 END IF;
+
+                -- Verificar caso de que el item tuviese padre
+                -- Aux1  es Codigo del padre del codigo viejo
+                SELECT padre INTO aux1 
+                FROM individuoAux 
+                WHERE codigo = codigosArray(i).codigoViejo;
+
+                IF aux1 IS NOT NULL THEN
+                    -- Si el padre del codigo viejo no es nulo verificar que exista en la tabla actual
+                    SELECT COUNT(codigo) INTO aux2 
+                    FROM individuo 
+                    WHERE codigo = aux1;
+
+                    IF aux2 > 0 THEN 
+                        -- Si el padre todavia existe setearlo en el elemento nuevo
+                        UPDATE individuo
+                        SET padre = aux1
+                        WHERE codigo = codigosArray(i).codigoNuevo;
+                    END IF;
+
+                END IF;
+
             END LOOP;
         END IF;
 

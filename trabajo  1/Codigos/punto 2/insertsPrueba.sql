@@ -56,7 +56,7 @@ INSERT INTO individuo VALUES (
 DELETE FROM individuo WHERE codigo = 1; 
 
 UPDATE individuo 
-SET codigo = 7
-WHERE codigo = 2;
+SET codigo = 2
+WHERE codigo = 4;
 
 SELECT COUNT(codigo) FROM individuo WHERE codigo = NULL;
