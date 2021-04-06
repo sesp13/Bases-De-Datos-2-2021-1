@@ -45,10 +45,18 @@ INSERT INTO individuo VALUES (
     NULL
 );
 
+INSERT INTO individuo VALUES (
+    5,
+    'Sofia',
+    56,
+    4,
+    NULL
+);
+
 DELETE FROM individuo WHERE codigo = 1; 
 
 UPDATE individuo 
-SET padre = 2
-WHERE padre = 8;
+SET codigo = 7
+WHERE codigo = 2;
 
 SELECT COUNT(codigo) FROM individuo WHERE codigo = NULL;

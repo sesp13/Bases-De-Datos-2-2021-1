@@ -14,3 +14,8 @@ valor NUMBER(8),
 padre NUMBER(8),
 nro_hijos NUMBER(8)
 );
+
+CREATE TABLE codigoAux(
+codigoViejo NUMBER(8),
+codigoNuevo NUMBER(8)
+);
