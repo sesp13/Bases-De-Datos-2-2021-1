@@ -60,3 +60,68 @@ SET codigo = 2
 WHERE codigo = 4;
 
 SELECT COUNT(codigo) FROM individuo WHERE codigo = NULL;
+
+-- Caso de prueba profesor
+
+INSERT INTO individuo VALUES (
+    19,
+    'Hope Sandoval',
+    10,
+    NULL,
+    NULL
+);
+
+INSERT INTO individuo VALUES (
+    32,
+    'Kirsty Hawkshaw',
+    8,
+    NULL,
+    NULL
+);
+
+INSERT INTO individuo VALUES (
+    64,
+    'Annabella Lwin',
+    10,
+    19,
+    NULL
+);
+
+INSERT INTO individuo VALUES (
+    122,
+    'Amanda Marshall',
+    20,
+    19,
+    NULL
+);
+
+INSERT INTO individuo VALUES (
+    11,
+    'Mavvie Marcos',
+    2,
+    64,
+    NULL
+);
+
+SELECT * FROM individuo;
+
+---------------------
+
+UPDATE individuo 
+SET valor = 18
+WHERE codigo = 19;
+SELECT * FROM individuo;
+
+UPDATE individuo 
+SET codigo = 333
+WHERE codigo = 19;
+SELECT * FROM individuo;
+
+DELETE FROM individuo
+WHERE codigo = 64;
+SELECT * FROM individuo;
+
+UPDATE individuo 
+SET valor = 4
+WHERE codigo = 333;
+SELECT * FROM individuo;
