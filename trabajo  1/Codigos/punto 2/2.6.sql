@@ -1,3 +1,7 @@
+-- Si se actualiza el código de un individuo 
+-- (por supuesto con un código que no exista en la tabla, esto ya lo controla la clave primaria),
+-- entonces a todos sus hijos se les debe propagar el cambio para que queden con el nuevo código de su padre. 
+-- Si no tiene hijos, solo se le cambia el código al individuo.
 CREATE OR REPLACE TRIGGER actualizaPadres    
 FOR UPDATE OF codigo ON individuo
 COMPOUND TRIGGER
