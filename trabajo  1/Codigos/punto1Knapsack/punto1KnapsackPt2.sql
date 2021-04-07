@@ -1,6 +1,6 @@
 DECLARE
     -- Variable de entrada
-    kilosPedidos NUMBER(10) := 29;
+    kilosPedidos NUMBER(10) := 16;
     -- Fin Variable de entrada
     TYPE camionType IS TABLE OF camion%ROWTYPE INDEX BY BINARY_INTEGER;  
     camionesArray camionType;
@@ -105,7 +105,7 @@ BEGIN
             END LOOP;
             -- DBMS_OUTPUT.PUT_LINE('/////////////////////////////////');
 
-            -- -- ///////////////// Funcion de seleccion /////////////////////
+            -- --------------------------------- Funcion de seleccion ---------------------------
             -- Inicializar K
             K := matrizVaciaAux;
             FOR i IN 0 .. cerdosPosibles.COUNT LOOP
@@ -206,7 +206,7 @@ BEGIN
 
                 -- DBMS_OUTPUT.PUT_LINE('xxxxxxxxxxxxxxxxxxxxxxxxxxx');
                 -- Mostrar informe de cerdos
-                DBMS_OUTPUT.PUT_LINE(aux1String);}
+                DBMS_OUTPUT.PUT_LINE(aux1String);
 
                 -- Recolectar datos para el informe final del camion
                 aux1String := 'Total peso cerdos: ' || capacidadUsada || 'Kg.';
