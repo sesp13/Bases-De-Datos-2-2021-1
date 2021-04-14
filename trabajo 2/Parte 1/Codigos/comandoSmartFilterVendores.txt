@@ -1,0 +1,27 @@
+#Smart filter
+multichain-cli empresa create streamfilter controlVendedores2 "{}" "function filterstreamitem() {  var obj = getfilterstreamitem();  if (obj.format != \"json\") return \"Solo se admiten JSON\";  var json = obj.data.json;  if (obj.keys.length > 1) return \"El elemento debe tener una sola clave\";  if (!json.hasOwnProperty(\"nombre\"))    return \"El Json debe de tener el campo nombre\";  if (!json.hasOwnProperty(\"telefono\"))    return \"El Json debe de tener la propiedad telefono\";  if (Object.keys(json).length > 2) {    return \"El Json solo puede tener nombre y telefono\";  }}"
+
+#Activar smart filter
+multichain-cli empresa approvefrom 1abU69c2VpdgwcekLzbAqmh9KGizEyTtUNdRUn controlVendedores2 "{\"for\": \"vendedores\", \"approve\": true}"
+
+#Insercion buena smart filter
+multichain-cli empresa publish vendedores key1 "{\"json\": {\"nombre\":\"Santiago\",\"telefono\":1235}}"
+
+#Subscribirse al stream
+multichain-cli empresa subscribe vendedores
+
+#ver lo que hay en el stream 
+multichain-cli empresa liststreamitems vendedores
+
+#Insercion mala smart filter sin telefono
+multichain-cli empresa publish vendedores key1 "{\"json\": {\"nombre\":\"Santiago\", \"animal\": \"Loro\"}}"
+
+#Insercion mala smart filter con mas parametros
+multichain-cli empresa publish vendedores key1 "{\"json\": {\"nombre\":\"Kusi\", \"animal\": \"Loro\", \"telefono\":1235}}"
+
+#Insercion mala smart filter multiples keys
+multichain-cli empresa publish vendedores "[\"key1\", \"key2\"]" "{\"json\": {\"nombre\":\"Kusi\", \"animal\": \"Loro\", \"telefono\":1235}}"
+
+#Insercion mala smart filter no es json (AUN NO HE ENCONTRADO UN EJEMPLO)
+multichain-cli empresa publish vendedores key1 "{\"\": \"no soy un json\"}"
+
