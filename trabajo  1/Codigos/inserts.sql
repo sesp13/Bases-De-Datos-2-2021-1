@@ -26,7 +26,7 @@ delete from cerdo;
 INSERT INTO cerdo VALUES(2, 'Ana Criado', 10);
 INSERT INTO cerdo VALUES(4, 'Dua Lipa', 4);
 INSERT INTO cerdo VALUES(11, 'Ava Max', 15);
-INSERT INTO cerdo VALUES(112, 'Ava Max 2', 5);
+-- INSERT INTO cerdo VALUES(112, 'Ava Max 2', 5);
 -- INSERT INTO cerdo VALUES(8, 'Saffron', 5);
 -- INSERT INTO cerdo VALUES(88, 'Saffron 2', 5);
 -- INSERT INTO cerdo VALUES(1, 'Un1co', 1);

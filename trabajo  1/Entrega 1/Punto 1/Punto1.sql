@@ -1,6 +1,6 @@
 DECLARE
     -- Variable de entrada
-    kilosPedidos NUMBER(10) := 15;
+    kilosPedidos NUMBER(10) := 16;
     -- Fin Variable de entrada
     TYPE camionType IS TABLE OF camion%ROWTYPE INDEX BY BINARY_INTEGER;  
     camionesArray camionType;
@@ -63,8 +63,8 @@ BEGIN
     --     DBMS_OUTPUT.PUT_LINE(cerdoArray(iterador).seleccionado);
     -- END LOOP;
     
-    DBMS_OUTPUT.PUT_LINE('Informe para Mi Cerdito');
-    DBMS_OUTPUT.PUT_LINE('-----------------------');
+    DBMS_OUTPUT.PUT_LINE('Informe para Mi Cerdito.');
+    DBMS_OUTPUT.PUT_LINE('-----');
 
     -- Controles iniciales
     IF camionesArray.COUNT = 0 THEN 
@@ -175,9 +175,9 @@ BEGIN
                 -- Flujo normal
 
                 -- Imprimir camion
-                DBMS_OUTPUT.PUT_LINE('Camion: ' || camionesArray(camionI).idCamion);
+                DBMS_OUTPUT.PUT_LINE('Camión: ' || camionesArray(camionI).idCamion);
 
-                aux1String := 'Lista de cerdos:';
+                aux1String := 'Lista cerdos:';
 
                 -- Contador para cerdosOptimos
                 FOR i IN 0 .. cerdosOptimos.COUNT - 1 LOOP
@@ -193,9 +193,9 @@ BEGIN
                                 || cerdosOptimos(i).nombre 
                                 || ') ' 
                                 || cerdosOptimos(i).pesokilos
-                                || 'Kg';
+                                || 'kg';
 
-                            IF i != cerdosOptimos.COUNT - 1 THEN 
+                            IF i != cerdosOptimos.COUNT -1 THEN 
                                 aux1String := aux1String || ','; 
                             ELSE 
                                 EXIT;
@@ -209,27 +209,27 @@ BEGIN
                 DBMS_OUTPUT.PUT_LINE(aux1String);
 
                 -- Recolectar datos para el informe final del camion
-                aux1String := 'Total peso cerdos: ' || capacidadUsada || 'Kg.';
+                aux1String := 'Total peso cerdos: ' || capacidadUsada || 'kg.';
 
                 -- aux1 aca es la resta de la maxima capacidad del camion menos la usada 
                 aux1 := camionesArray(camionI).maximacapacidadkilos - capacidadUsada;
 
                 aux1String :=  aux1String 
-                    ||  ' Capacidad no usada del camion: ' 
+                    ||  ' Capacidad no usada del camión: ' 
                     ||   aux1
-                    ||  'Kg.';
+                    ||  'kg';
                 -- Imprimir la capacidad no usada del camion
                 DBMS_OUTPUT.PUT_LINE(aux1String);
 
                 -- Sumar al contador total los kilos que lleva este camion
                 kilosTotales := kilosTotales + capacidadUsada;
 
-                DBMS_OUTPUT.PUT_LINE('-----------------------------');    
+                --DBMS_OUTPUT.PUT_LINE('-----');    
                 -- Controlar el peso restante para la capacidad solicitada
                 kilosPedidosI := kilosPedidosI - camionesArray(camionI).maximacapacidadkilos;
                 -- kilosPedidosI := kilosPedidosI - capacidadUsada;
                 -- DBMS_OUTPUT.PUT_LINE(kilosPedidosI);    
-                -- DBMS_OUTPUT.PUT_LINE('-----------------------------');    
+                -- DBMS_OUTPUT.PUT_LINE('-----');    
 
                 -- Terminar el proceso cuando los kilos usados sean negativos siempre y cuando sobren camiones
                 IF kilosPedidosI < 0 THEN 
@@ -240,12 +240,12 @@ BEGIN
 
 
         END LOOP;
-
+        DBMS_OUTPUT.PUT_LINE('-----');    
         -- Imprimir el informe final
         --  Aca aux 2 representa los kilos no satisfechos
          aux2 := kilosPedidos - kilosTotales;
-         aux1String := 'Total peso solicitado: ' || kilosPedidos || 'Kg. Peso real enviado: '
-         || kilosTotales || 'Kg. Peso no satisfecho ' || aux2 || 'Kg.';                
+         aux1String := 'Total Peso solicitado: ' || kilosPedidos || 'kg. Peso real enviado: '
+         || kilosTotales || 'kg. Peso no satisfecho: ' || aux2 || 'kg.';                
          DBMS_OUTPUT.PUT_LINE(aux1String);    
 
     END IF;
