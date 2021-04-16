@@ -20,7 +20,3 @@ CREATE TABLE codigoAux(
 codigoViejo NUMBER(8),
 codigoNuevo NUMBER(8)
 );
-
-DROP TABLE codigoAux;
-DROP TABLE individuoAuxUpdate;
-DROP TABLE individuoAux;
