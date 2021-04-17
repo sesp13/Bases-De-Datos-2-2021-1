@@ -1,0 +1,39 @@
+        CommandManager commandManager = new CommandManager(
+                "localhost",
+                "4250",
+                "multichainrpc",
+                "2Q3a6Mjnpq3oVAJdhuNde4AU9gL4qHcEecAcgmdCJNuW"
+        );
+
+        List<String> lst;
+        try {
+            jsonString = {
+                    "nombre" : "Simon",
+                    "telefono" : "123123"
+            }
+            Gson g = new Gson();
+            Player p = g.fromJson(jsonString, Player.class);
+            lst = (List<String>) commandManager.invoke(CommandElt.PUBLISH, "vendedores", "key1", p);
+            for(String item : lst){
+                System.out.println(item);
+                System.out.println("-----------");
+            }
+        } catch (MultichainException e){
+            e.printStackTrace();
+        }
+
+        /*
+        List<StreamKeyItem> items;
+        try {
+            //subscribirse
+            commandManager.invoke(CommandElt.SUBSCRIBE, "vendedores");
+            //Elementos de de key 1, esta consulta nos sirve para insertar
+            items = (List<StreamKeyItem>)commandManager.invoke(CommandElt.LISTSTREAMKEYITEMS, "vendedores", "key1");
+            for (StreamKeyItem item : items) {
+                System.out.println(item.getData());
+                System.out.println("-----------");
+            }
+        } catch (MultichainException e) {
+            e.printStackTrace();
+        }
+        */
