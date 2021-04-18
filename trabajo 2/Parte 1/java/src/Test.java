@@ -17,31 +17,26 @@ public class Test {
         ApiMultichainBD2 api = new ApiMultichainBD2("localhost", "4250", "multichainrpc",
                 "2Q3a6Mjnpq3oVAJdhuNde4AU9gL4qHcEecAcgmdCJNuW");
 
-        // Insertar vendedor
-        String nombre = "Andres";
-        String telefono = "46464646";
+        // ---------------- Insertar vendedor -------------------------------------
+        // String nombre = "Uriel";
+        // String telefono = "46464646";
         String cedula = "cedula1";
 
-        ReturnFormat resultadoInsercionVendedor = api.InsertarVendedor(cedula, nombre, telefono);
-        System.out.println(resultadoInsercionVendedor.mensaje);
-        System.out.println(resultadoInsercionVendedor.esError);
+        // ReturnFormat resultadoInsercionVendedor = api.InsertarVendedor(cedula, nombre, telefono);
+        // System.out.println(resultadoInsercionVendedor.mensaje);
+        // System.out.println(resultadoInsercionVendedor.esError);
+        // // komando para listar vendedores
+        api.ListarVendedoresConsola(cedula);
 
-        // komando para listar
-        List<StreamKeyItem> items;
-        try {
-            // subscribirse
-            api.commandManager.invoke(CommandElt.SUBSCRIBE, "vendedores");
-            // Elementos de de key 1, esta consulta nos sirve para insertar
-            items = (List<StreamKeyItem>) api.commandManager.invoke(CommandElt.LISTSTREAMKEYITEMS, "vendedores",
-                    "cedula1");
-            for (StreamKeyItem item : items) {
-                System.out.println(item.getData());
-                System.out.println("-----------");
-            }
-        } catch (MultichainException e) {
-            e.printStackTrace();
-        }
+        // Insertar ganancias
+        // String cedula = "cedula1";
+        // Number valor = 444.55;
+        // ReturnFormat resultadoInsercionGanancia = api.InsertarGanancias(cedula, valor);
+        // System.out.println(resultadoInsercionGanancia.mensaje);
+        // System.out.println(resultadoInsercionGanancia.esError);
+        api.ListarGananciasConsola(cedula);
 
+        // Otras pruebas, no descomentar
         // // Comando para insertar
         // List<String> lst;
         // try {
@@ -65,14 +60,5 @@ public class Test {
         // // Imprimir razon del error
         // System.out.println(e.getReason());
     }
-
-    // ApiMultichainBD2 api = new ApiMultichainBD2();
-    // System.out.println("Vendedor");
-    // System.out.println(api.convertirVendedor("Juan Carlos", "78999"));
-
-    // System.out.println("Ganancia");
-    // String ganancia = api.convertirGanancia(28);
-    // api.InsertarGanancias("key1", ganancia);
-    // api.ListarGanancias("key1");
 
 }
