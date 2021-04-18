@@ -5,7 +5,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import apiMultichain.ApiMultichainBD2;
+import apiMultichain.Ganancia;
 import apiMultichain.ReturnFormat;
+import apiMultichain.Vendedor;
 import multichain.command.*;
 import multichain.object.*;
 
@@ -18,50 +20,46 @@ public class Test {
                 "2Q3a6Mjnpq3oVAJdhuNde4AU9gL4qHcEecAcgmdCJNuW");
 
         // ---------------- Insertar vendedor -------------------------------------
-        // String nombre = "Uriel";
-        // String telefono = "46464646";
-        String cedula = "cedula1";
+        // String nombre = "Juliana Dominguez";
+        // String telefono = "346464646";
+        // String cedula = "cedula2";
 
-        // ReturnFormat resultadoInsercionVendedor = api.InsertarVendedor(cedula, nombre, telefono);
+        // ReturnFormat resultadoInsercionVendedor = api.insertarVendedor(cedula, nombre, telefono);
         // System.out.println(resultadoInsercionVendedor.mensaje);
         // System.out.println(resultadoInsercionVendedor.esError);
         // // komando para listar vendedores
-        api.ListarVendedoresConsola(cedula);
-
+        // System.out.println("------------------------ Listado por consola de vendedores --------------------------------");
+        // api.listarVendedoresConsola("cedula2");
+        
         // Insertar ganancias
         // String cedula = "cedula1";
         // Number valor = 780;
-        // ReturnFormat resultadoInsercionGanancia = api.InsertarGanancias(cedula, valor);
+        // ReturnFormat resultadoInsercionGanancia = api.insertarGanancias(cedula, valor);
         // System.out.println(resultadoInsercionGanancia.mensaje);
         // System.out.println(resultadoInsercionGanancia.esError);
-        api.ListarGananciasConsola(cedula);
-
+        // System.out.println("------------------------ Listado por consola de ganancias --------------------------------");
+        // api.listarGananciasConsola(cedula);
+        
         // Obtener cédulas de vendedores
+        System.out.println("------------------------ Listado de cédulas de vendedores --------------------------------");
         System.out.println(api.obtenerCedulasVendedores());
         
-        // Otras pruebas, no descomentar
-        // // Comando para insertar
-        // List<String> lst;
-        // try {
-        // // Caso bueno
-        // String prueba = "{\"json\":{\"nombre\":\"Carlos Antonio\", \"telefono\":
-        // 99999}}";
-        // // Caso malo
-        // // String prueba = "{\"json\":{\"nombre\":\"Carlos Antonio\", \"telefono\":
-        // 99999}}";
-        // JsonObject jsonObject = new JsonParser().parse(prueba).getAsJsonObject();
+        //Obtener ganancias de un vendedor
+        System.out.println("------------------------ Listado de ganancias de un vendedor, lista de objeto ganancia --------------------------------");
+        String cedulaVendedor = "key1";
+        LinkedList<Ganancia> gananciasVendedores = api.obtenerListaGananciasPorVendedor(cedulaVendedor);
+        System.out.println(String.format("Ganancias del vendedor: %s", cedulaVendedor));
+        for(Ganancia ganancia : gananciasVendedores){
+            System.out.println(String.format("Vendedor: %s Ganancia: %s", ganancia.vendedor, ganancia.valor));
+        }
+        
+        //Obtener vendedores
+        System.out.println("------------------------ Listado de vendedores con sus ganancias --------------------------------");
+        LinkedList<Vendedor> vendedores = api.obtenerVendedores();
+        for(Vendedor vendedor : vendedores){
+            System.out.println(String.format("Vendedor: %s Telefono: %s Ganancia: %s", vendedor.nombre, vendedor.telefono, vendedor.ganancias));
+        }
 
-        // String resultado = (String) api.commandManager.invoke(CommandElt.PUBLISH,
-        // "vendedores", "key1", jsonObject);
-        // System.out.println(resultado);
-        // // for(String item : lst){
-        // // System.out.println(item);
-        // // System.out.println("-----------");
-        // // }
-        // } catch (MultichainException e){
-        // e.printStackTrace();
-        // // Imprimir razon del error
-        // System.out.println(e.getReason());
     }
 
 }
