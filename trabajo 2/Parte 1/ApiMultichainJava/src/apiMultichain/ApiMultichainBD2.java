@@ -67,6 +67,23 @@ public class ApiMultichainBD2 {
         return new ReturnFormat(mensaje, esError);
     }
 
+    public LinkedList<String> obtenerCedulasVendedores() {
+        LinkedList<String> resultado = new LinkedList<String>();
+        
+        try {
+            List<StreamKey> items;
+            // Subscribirse
+            this.commandManager.invoke(CommandElt.SUBSCRIBE, "vendedores");
+            items = (List<StreamKey>) this.commandManager.invoke(CommandElt.LISTSTREAMKEYS, "vendedores");
+            for (StreamKey item : items) {
+                resultado.add(item.getKey());
+            }
+        } catch (MultichainException e) {
+        }
+
+        return resultado;
+    }
+
     // ----------------------- Métodos para ver cosas por consola
     public void ListarVendedoresConsola(String cedula) {
         List<StreamKeyItem> items;

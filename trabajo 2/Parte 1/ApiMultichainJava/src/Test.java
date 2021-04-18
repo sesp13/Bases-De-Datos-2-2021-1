@@ -30,12 +30,15 @@ public class Test {
 
         // Insertar ganancias
         // String cedula = "cedula1";
-        // Number valor = 444.55;
+        // Number valor = 780;
         // ReturnFormat resultadoInsercionGanancia = api.InsertarGanancias(cedula, valor);
         // System.out.println(resultadoInsercionGanancia.mensaje);
         // System.out.println(resultadoInsercionGanancia.esError);
         api.ListarGananciasConsola(cedula);
 
+        // Obtener cédulas de vendedores
+        System.out.println(api.obtenerCedulasVendedores());
+        
         // Otras pruebas, no descomentar
         // // Comando para insertar
         // List<String> lst;
