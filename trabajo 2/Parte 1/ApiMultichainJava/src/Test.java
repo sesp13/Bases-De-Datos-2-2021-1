@@ -20,8 +20,8 @@ public class Test {
                 "2Q3a6Mjnpq3oVAJdhuNde4AU9gL4qHcEecAcgmdCJNuW");
 
         // ---------------- Insertar vendedor -------------------------------------
-        // String nombre = "Juliana Dominguez";
-        // String telefono = "346464646";
+        // String nombre = "";
+        // String telefono = "123456";
         // String cedula = "cedula2";
 
         // ReturnFormat resultadoInsercionVendedor = api.insertarVendedor(cedula, nombre, telefono);
