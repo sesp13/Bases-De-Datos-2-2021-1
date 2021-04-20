@@ -20,24 +20,24 @@ public class Test {
                 "2Q3a6Mjnpq3oVAJdhuNde4AU9gL4qHcEecAcgmdCJNuW");
 
         // ---------------- Insertar vendedor -------------------------------------
-        // String nombre = "";
-        // String telefono = "123456";
-        // String cedula = "cedula2";
+        // String nombre = "El de la cedula 5";
+        // String telefono = "555555";
+        // String cedula = "cedula5";
 
         // ReturnFormat resultadoInsercionVendedor = api.insertarVendedor(cedula, nombre, telefono);
         // System.out.println(resultadoInsercionVendedor.mensaje);
         // System.out.println(resultadoInsercionVendedor.esError);
         // // komando para listar vendedores
         // System.out.println("------------------------ Listado por consola de vendedores --------------------------------");
-        // api.listarVendedoresConsola("cedula2");
+        // api.listarVendedoresConsola("");
         
         // Insertar ganancias
-        // String cedula = "cedula1";
-        // Number valor = 780;
+        // String cedula = "cedula5";
+        // Number valor = 555;
         // ReturnFormat resultadoInsercionGanancia = api.insertarGanancias(cedula, valor);
         // System.out.println(resultadoInsercionGanancia.mensaje);
         // System.out.println(resultadoInsercionGanancia.esError);
-        // System.out.println("------------------------ Listado por consola de ganancias --------------------------------");
+        System.out.println("------------------------ Listado por consola de ganancias --------------------------------");
         // api.listarGananciasConsola(cedula);
         
         // Obtener cédulas de vendedores
@@ -59,6 +59,7 @@ public class Test {
         for(Vendedor vendedor : vendedores){
             System.out.println(String.format("Vendedor: %s Telefono: %s Ganancia: %s", vendedor.nombre, vendedor.telefono, vendedor.ganancias));
         }
+
 
     }
 

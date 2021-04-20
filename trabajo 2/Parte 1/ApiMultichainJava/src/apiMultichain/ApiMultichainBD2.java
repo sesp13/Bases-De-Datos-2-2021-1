@@ -238,7 +238,6 @@ public class ApiMultichainBD2 {
         resultado = "";
         index = 0;
         for(String element : lista){
-            System.out.println(element);
             resultado = resultado + element;
             if(index != lista.length - 1){
                 resultado = resultado + "=\"\",";
