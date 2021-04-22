@@ -1,0 +1,23 @@
+# Crear la block chain empresa
+multichain-util create empresa
+
+#Conectarse a la blockchain empresa
+multichaind empresa -daemon
+
+#Crear stream vendedores
+multichain-cli empresa create stream vendedores "{\"restrict\":\"write\"}"
+
+#Crear stream ganancias
+multichain-cli empresa create stream ganancias "{\"restrict\":\"write\"}"
+
+#Crear smart filter para vendedores
+multichain-cli empresa create streamfilter controlVendedores2 "{}" "function filterstreamitem() {  var obj = getfilterstreamitem();  if (obj.format != \"json\") return \"Solo se admiten JSON\";  var json = obj.data.json;  if (obj.keys.length > 1) return \"El elemento debe tener una sola clave\";  if (!json.hasOwnProperty(\"nombre\"))    return \"El Json debe de tener el campo nombre\";  if (!json.hasOwnProperty(\"telefono\"))    return \"El Json debe de tener la propiedad telefono\";  if (Object.keys(json).length > 2) {    return \"El Json solo puede tener nombre y telefono\";  }}"
+
+#Activar smart filter de vendedores
+multichain-cli empresa approvefrom 1SwvNeBK92HyG7ccQ6EvYMTMGYTiV4bkc9ywbg controlVendedores2 "{\"for\": \"vendedores\", \"approve\": true}"
+
+#Crear smart filter de ganancia
+multichain-cli empresa create streamfilter controlGanancias "{}" "function filterstreamitem() {  var obj = getfilterstreamitem();  if (obj.format != \"json\") return \"Solo se admiten JSON\";  var json = obj.data.json;  if (obj.keys.length > 1) return \"El elemento debe tener una sola clave\";  if (!json.hasOwnProperty(\"valor\"))    return \"El Json debe de tener el campo valor\";  if (Object.keys(json).length > 1) {    return \"El Json solo puede tener el campo valor\";  }}"
+
+#Activar smart filter de ganancia
+multichain-cli empresa approvefrom 1SwvNeBK92HyG7ccQ6EvYMTMGYTiV4bkc9ywbg controlGanancias "{\"for\": \"ganancias\", \"approve\": true}"

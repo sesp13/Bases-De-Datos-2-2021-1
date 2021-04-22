@@ -24,7 +24,7 @@ public class consulta implements ActionListener{
     
     public consulta(){                
      
-        usuario = new ApiMultichainBD2("localhost", "4250", "multichainrpc","2Q3a6Mjnpq3oVAJdhuNde4AU9gL4qHcEecAcgmdCJNuW");
+        usuario = new ApiMultichainBD2("localhost", "8384", "multichainrpc","F3F6VEVLNXBbi9EMkNSgYNtbFukTgidaxNawY5gNYFKZ");
 
         vendedores = usuario.obtenerCedulasVendedores();
         arrayCedulas = new String[vendedores.size()];
