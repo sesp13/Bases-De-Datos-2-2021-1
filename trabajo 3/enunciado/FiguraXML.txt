@@ -1,0 +1,54 @@
+DROP TABLE figura;
+CREATE TABLE figura(
+doc XMLTYPE
+);
+
+INSERT INTO figura 
+VALUES(XMLTYPE('
+<figuras>
+ <rectangulo> 
+   <a>100</a>
+   <b>100</b>
+   <c>300</c>
+   <d>300</d>
+ </rectangulo>
+ <linea>
+   <a>200</a>
+   <b>200</b>
+   <c>60</c>
+   <d>40</d>
+ </linea>
+ <circulo>
+   <a>200</a>
+   <b>200</b>
+   <c>50</c>
+   <d>50</d>
+ </circulo>
+</figuras>')
+);
+
+
+COMMIT;
+
+--Las consultas que serán usadas en Java:
+
+SELECT EXTRACTVALUE(doc,'/figuras/rectangulo/a') AS a,
+       EXTRACTVALUE(doc,'/figuras/rectangulo/b') AS b,
+       EXTRACTVALUE(doc,'/figuras/rectangulo/c') AS c,
+       EXTRACTVALUE(doc,'/figuras/rectangulo/d') AS d
+FROM figura;
+
+SELECT EXTRACTVALUE(doc,'/figuras/linea/a') AS a,
+       EXTRACTVALUE(doc,'/figuras/linea/b') AS b,
+       EXTRACTVALUE(doc,'/figuras/linea/c') AS c,
+       EXTRACTVALUE(doc,'/figuras/linea/d') AS d
+FROM figura;
+
+SELECT EXTRACTVALUE(doc,'/figuras/circulo/a') AS a,
+       EXTRACTVALUE(doc,'/figuras/circulo/b') AS b,
+       EXTRACTVALUE(doc,'/figuras/circulo/c') AS c,
+       EXTRACTVALUE(doc,'/figuras/circulo/d') AS d
+FROM figura;
+
+
+

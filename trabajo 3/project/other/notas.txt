@@ -1,1 +1,3 @@
+Para ingresar a sql usar el comando connect y poner admin admin
+
 Se debe tener en las variables de entorno el driver de oracle java
