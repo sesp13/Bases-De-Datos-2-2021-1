@@ -1,4 +1,4 @@
-package classes.models;
+package models;
 
 public class Departamento {
 

@@ -2,12 +2,22 @@ package classes;
 
 import java.sql.*;
 import java.util.*;
-import classes.models.*;
+
+import controllers.*;
+import models.*;
 
 public class SqlGenerator {
 
+  // Conexion a la base de datos oracle
   Connection conn;
+
+  // Datos de autenticacion
   Auth auth;
+
+  // Controladores
+  CiudadController ciudadController;
+  EmpleadoController empleadoController;
+  DepartamentoController departamentoController;
 
   // Constructor
   public SqlGenerator() {
@@ -31,103 +41,31 @@ public class SqlGenerator {
       return;
     }
 
+    // Carga de controladores
+    this.ciudadController = new CiudadController(conn);
+    this.empleadoController = new EmpleadoController(conn);
+    this.departamentoController = new DepartamentoController(conn);
+
     this.generarEstadisticas();
 
   }
 
   public void generarEstadisticas() {
     // Obtención de departamentos
-    var departamentos = this.getDepartamentos();
+    var departamentos = this.departamentoController.getDepartamentos();
 
     if (departamentos != null) {
       for (Departamento departamento : departamentos) {
 
-        var ciudades = this.getCiudadesPorDepartamento(departamento.cod);
+        var ciudades = this.ciudadController.getCiudadesPorDepartamento(departamento.cod);
 
         if (ciudades != null) {
-          //Iterar sobre las ciudades del departamento
+          // Iterar sobre las ciudades del departamento
           for (Ciudad ciudad : ciudades) {
-            getEmpleadosPorCiudad(ciudad.cod);
+            this.empleadoController.getEmpleadosPorCiudad(ciudad.cod);
           }
         }
       }
-    }
-  }
-
-  public LinkedList<Departamento> getDepartamentos() {
-
-    String consulta = "SELECT * FROM departamento";
-
-    try {
-      Statement sentencia = conn.createStatement();
-      ResultSet querie = sentencia.executeQuery(consulta);
-
-      LinkedList<Departamento> resultado = new LinkedList<Departamento>();
-
-      while (querie.next()) {
-
-        resultado.add(new Departamento(querie.getFloat("cod"), querie.getString("nom")));
-
-      }
-
-      return resultado;
-
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-      return null;
-    }
-
-  }
-
-  public LinkedList<Ciudad> getCiudadesPorDepartamento(Number codDepartamento) {
-    var consulta = "SELECT * FROM ciudad WHERE midep = (SELECT REF(d) FROM departamento d WHERE cod = %s)";
-    consulta = String.format(consulta, codDepartamento);
-    // System.out.println(consulta);
-
-    try {
-      Statement sentencia = conn.createStatement();
-      ResultSet querie = sentencia.executeQuery(consulta);
-
-      LinkedList<Ciudad> resultado = new LinkedList<Ciudad>();
-
-      while (querie.next()) {
-
-        // System.out.println(querie.getFloat("cod") + querie.getString("nom"));
-        resultado.add(new Ciudad(querie.getFloat("cod"), querie.getString("nom"), codDepartamento));
-
-      }
-
-      return resultado;
-
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-      return null;
-    }
-  }
-
-  public LinkedList<Empleado> getEmpleadosPorCiudad(Number codCiudad) {
-    var consulta = "SELECT * FROM empleado WHERE miciu = (SELECT REF(c) FROM ciudad c WHERE cod = %s)";
-    consulta = String.format(consulta, codCiudad);
-    // System.out.println(consulta);
-
-    try {
-      Statement sentencia = conn.createStatement();
-      ResultSet querie = sentencia.executeQuery(consulta);
-
-      LinkedList<Empleado> resultado = new LinkedList<Empleado>();
-
-      while (querie.next()) {
-
-        System.out.println(querie.getFloat("cc") + querie.getString("nom"));
-        resultado.add(new Empleado(querie.getFloat("cc"), querie.getString("nom"), codCiudad, ""));
-
-      }
-
-      return resultado;
-
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-      return null;
     }
   }
 
