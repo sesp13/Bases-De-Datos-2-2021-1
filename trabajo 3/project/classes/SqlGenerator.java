@@ -61,8 +61,10 @@ public class SqlGenerator {
 
         if (ciudades != null) {
           // Iterar sobre las ciudades del departamento
+          LinkedList<Venta> ventasCiudad = new LinkedList<Venta>();
+          
           for (Ciudad ciudad : ciudades) {
-            this.empleadoController.getEmpleadosPorCiudad(ciudad.cod);
+            var empleados = this.empleadoController.getEmpleadosPorCiudad(ciudad.cod);
           }
         }
       }

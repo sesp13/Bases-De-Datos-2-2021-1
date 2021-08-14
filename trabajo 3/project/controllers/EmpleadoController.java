@@ -26,8 +26,19 @@ public class EmpleadoController {
 
       while (querie.next()) {
 
-        System.out.println(querie.getFloat("cc") + querie.getString("nom"));
-        resultado.add(new Empleado(querie.getFloat("cc"), querie.getString("nom"), codCiudad, ""));
+        // System.out.println(querie.getFloat("cc") + querie.getString("nom"));
+        // LinkedList<Venta> ventaEmpleado = new LinkedList<Venta>();
+
+        // var ventasArray = querie.getArray("ventas").getResultSet();
+
+        // System.out.println(ventasArray.);
+
+        // while(ventasArray.next()){
+        //   System.out.println(ventasArray.getRef("miprod"));
+        // }
+
+        resultado
+            .add(new Empleado(querie.getFloat("cc"), querie.getString("nom"), codCiudad, "", querie.getRef("miciu")));
 
       }
 
