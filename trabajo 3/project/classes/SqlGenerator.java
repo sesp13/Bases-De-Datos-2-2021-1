@@ -18,6 +18,7 @@ public class SqlGenerator {
   CiudadController ciudadController;
   EmpleadoController empleadoController;
   DepartamentoController departamentoController;
+  VentasController ventasController;
 
   // Constructor
   public SqlGenerator() {
@@ -45,6 +46,7 @@ public class SqlGenerator {
     this.ciudadController = new CiudadController(conn);
     this.empleadoController = new EmpleadoController(conn);
     this.departamentoController = new DepartamentoController(conn);
+    this.ventasController = new VentasController(conn);
 
     this.generarEstadisticas();
 
@@ -65,6 +67,8 @@ public class SqlGenerator {
           
           for (Ciudad ciudad : ciudades) {
             var empleados = this.empleadoController.getEmpleadosPorCiudad(ciudad.cod);
+            // var ventas = 
+            this.ventasController.getVentasPorCiudad(ciudad.cod);
           }
         }
       }

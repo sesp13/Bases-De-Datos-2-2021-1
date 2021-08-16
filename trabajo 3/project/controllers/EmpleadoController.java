@@ -14,7 +14,7 @@ public class EmpleadoController {
   }
 
   public LinkedList<Empleado> getEmpleadosPorCiudad(Number codCiudad) {
-    var consulta = "SELECT * FROM empleado WHERE miciu = (SELECT REF(c) FROM ciudad c WHERE cod = %s)";
+    var consulta = "SELECT cc, nom, miciu FROM empleado WHERE miciu = (SELECT REF(c) FROM ciudad c WHERE cod = %s)";
     consulta = String.format(consulta, codCiudad);
     // System.out.println(consulta);
 
@@ -26,19 +26,9 @@ public class EmpleadoController {
 
       while (querie.next()) {
 
-        // System.out.println(querie.getFloat("cc") + querie.getString("nom"));
-        // LinkedList<Venta> ventaEmpleado = new LinkedList<Venta>();
-
-        // var ventasArray = querie.getArray("ventas").getResultSet();
-
-        // System.out.println(ventasArray.);
-
-        // while(ventasArray.next()){
-        //   System.out.println(ventasArray.getRef("miprod"));
-        // }
-
+        //Por defecto no se llena la lista de ventas
         resultado
-            .add(new Empleado(querie.getFloat("cc"), querie.getString("nom"), codCiudad, "", querie.getRef("miciu")));
+            .add(new Empleado(querie.getFloat("cc"), querie.getString("nom"), codCiudad, null, querie.getRef("miciu")));
 
       }
 
