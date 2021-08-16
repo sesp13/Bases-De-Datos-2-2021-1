@@ -48,29 +48,77 @@ public class SqlGenerator {
     this.departamentoController = new DepartamentoController(conn);
     this.ventasController = new VentasController(conn);
 
-    this.generarEstadisticas();
+    this.visualizarListaMongoClass(this.generarEstadisticas());
 
   }
 
-  public void generarEstadisticas() {
+  public LinkedList<MongoClass> generarEstadisticas() {
+
+    // Objeto de resultado
+    var resultado = new LinkedList<MongoClass>();
+
     // Obtención de departamentos
     var departamentos = this.departamentoController.getDepartamentos();
 
     if (departamentos != null) {
       for (Departamento departamento : departamentos) {
 
+        var misventas = new LinkedList<MongoVentas>();
+
+        // Obtencion de ciudades dentro de departamentos
         var ciudades = this.ciudadController.getCiudadesPorDepartamento(departamento.cod);
 
         if (ciudades != null) {
-          // Iterar sobre las ciudades del departamento
-          LinkedList<Venta> ventasCiudad = new LinkedList<Venta>();
-          
+
           for (Ciudad ciudad : ciudades) {
-            var empleados = this.empleadoController.getEmpleadosPorCiudad(ciudad.cod);
-            // var ventas = 
-            this.ventasController.getVentasPorCiudad(ciudad.cod);
+
+            // Obtener listado de empleados
+            // var empleados = this.empleadoController.getEmpleadosPorCiudad(ciudad.cod);
+
+            // Arreglo de las ventas de la ciudad
+            // var ventasCiudad = this.ventasController.getVentasPorCiudad(ciudad.cod);
+
+            // Obtener la cantidad total de ventas
+            var valorTotalVentasCiudad = this.ventasController.getValorTotalVentasCiudad(ciudad.cod);
+
+            // Obtener vendedor con mas ventas
+            var empleadoConMasVentas = this.ventasController.getEmpleadoConMasVentas(ciudad.cod);
+
+            // Generar estadisticas misVentas
+            var detalle = new MongoVentas();
+            detalle.nombreCiudad = ciudad.nom;
+            detalle.mejorVendedor = empleadoConMasVentas;
+            detalle.valorVentas = valorTotalVentasCiudad;
+
+            misventas.add(detalle);
+
           }
         }
+
+        // Construir el modelo final
+        var resultadoDepartamento = new MongoClass();
+        resultadoDepartamento.nombreDepartamento = departamento.nom;
+        resultadoDepartamento.misventas = misventas;
+
+        // Agregar el departamento al resultado final
+        resultado.add(resultadoDepartamento);
+      }
+    }
+
+    // Retornar departamento
+    return resultado;
+  }
+
+  public void visualizarListaMongoClass(LinkedList<MongoClass> lista) {
+    for (MongoClass item : lista) {
+      System.out.println("--------------");
+      System.out.println(String.format("Nombre: %s", item.nombreDepartamento));
+      System.out.println("-- Detalle");
+      for(MongoVentas ventas : item.misventas){
+        System.out.println(String.format("Ciudad: %s", ventas.nombreCiudad));
+        System.out.println(String.format("Total: %s", ventas.valorVentas));
+        System.out.println(String.format("MejorVendedor: %s", ventas.mejorVendedor));
+        System.out.println("*********");
       }
     }
   }
