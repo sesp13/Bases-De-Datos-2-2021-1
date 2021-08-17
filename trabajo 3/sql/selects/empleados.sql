@@ -31,3 +31,5 @@ SELECT * FROM (
   ORDER BY total DESC
 ) WHERE rownum <= 1;
 
+--Get empleado por id
+SELECT cc, nom, DEREF(miciu).cod as codCiudad FROM empleado e;

@@ -55,4 +55,4 @@ UPDATE empleado  SET ventas = vent_varray(
 WHERE cc = 105;
 
 -- Reiniciar todos los arreglos de ventas
-UPDATE empleado SET ventas = vent_varray();
+-- UPDATE empleado SET ventas = vent_varray();

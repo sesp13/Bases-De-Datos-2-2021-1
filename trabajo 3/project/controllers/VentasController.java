@@ -98,4 +98,30 @@ public class VentasController {
     }
   }
 
+  public Number getTotalVentasEmpleado(Number cc) {
+    var consulta = "SELECT " + "SUM((v.miprod.precio_unitario) * v.nro_unidades) AS total "
+        + "FROM empleado e, TABLE(e.ventas) v " + "WHERE e.cc = %s ";
+
+    consulta = String.format(consulta, cc);
+    // System.out.println(consulta);
+
+    try {
+      Statement sentencia = conn.createStatement();
+      ResultSet querie = sentencia.executeQuery(consulta);
+
+      Number resultado = null;
+
+      while (querie.next()) {
+        resultado = querie.getFloat("total");
+        // System.out.println(resultado);
+      }
+
+      return resultado;
+
+    } catch (Exception e) {
+      System.out.println("Error obteniendo total de ventas de empleado: " + e.getMessage());
+      return null;
+    }
+  }
+
 }
