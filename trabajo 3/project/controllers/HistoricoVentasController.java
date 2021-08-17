@@ -42,7 +42,7 @@ public class HistoricoVentasController {
   public boolean crearHistoricoVentas(HistoricoVenta historicoNuevo) {
     var consulta = "INSERT INTO historicoventas VALUES(%s, %s)";
     consulta = String.format(consulta, historicoNuevo.cc, historicoNuevo.totalacumuladoventas);
-    System.out.println(consulta);
+    // System.out.println(consulta);
 
     Boolean resultado = false;
 

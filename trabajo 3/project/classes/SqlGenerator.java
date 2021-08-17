@@ -54,7 +54,8 @@ public class SqlGenerator {
     this.ventasController = new VentasController(conn);
     this.historicoVentasController = new HistoricoVentasController(conn);
 
-    // this.visualizarListaMongoClass(this.generarEstadisticas());
+    this.visualizarListaMongoClass(this.generarEstadisticas());
+    System.out.println("------------------------------------------------------------------------------------------------------------------------------------------");
     this.generarHistorico();
 
   }
