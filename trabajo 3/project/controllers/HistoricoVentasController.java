@@ -1,7 +1,6 @@
 package controllers;
 
 import java.sql.*;
-import java.util.*;
 import models.*;
 
 public class HistoricoVentasController {
@@ -84,15 +83,5 @@ public class HistoricoVentasController {
       return false;
     }
   }
-
-  // Iterar sobre los empleados
-
-  // Sacar el resultado del historico de ventas, si noo existe crear el registro,
-  // sino actualizarlo
-
-  // Necesito obtener el total de ventas del empleado para poder saber como
-  // actualizar
-
-  // Borrar los arrays actualues
 
 }
