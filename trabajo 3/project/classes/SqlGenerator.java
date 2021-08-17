@@ -187,7 +187,7 @@ public class SqlGenerator {
     }
 
     // -------- Reiniciar ventas de empleados ------------
-    var resultadoReinicioVentas = this.empleadoController.reiniciarVentas();
+    var resultadoReinicioVentas = this.ventasController.reiniciarVentas();
 
     if (resultadoReinicioVentas) {
       System.out.println("Ventas borradas correctamente");

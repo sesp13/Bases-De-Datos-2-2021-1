@@ -92,24 +92,4 @@ public class EmpleadoController {
     }
   }
 
-  public Boolean reiniciarVentas(){
-    var consulta = "UPDATE empleado SET ventas = vent_varray()";
-
-    Boolean resultado = false;
-
-    try {
-      Statement sentencia = conn.createStatement();
-      sentencia.executeQuery(consulta);
-
-      resultado = true;
-
-      return resultado;
-
-    } catch (Exception e) {
-      System.out.println("Error reiniciando las ventas de los empleados " + e.getMessage());
-      return null;
-    }
-
-  }
-
 }
