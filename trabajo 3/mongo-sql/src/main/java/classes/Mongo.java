@@ -1,8 +1,10 @@
 package classes;
 
+import models.MongoVentas;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-
+import java.sql.Ref;
+import java.util.LinkedList;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
@@ -20,12 +22,8 @@ public class Mongo {
         MongoCollection collection;
 
         MongoDatabase mongoDatabase;
-
         public Mongo(Document document){
-                //Local
                 this.uri = "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false";
-                //Atlas
-                this.uri = "mongodb+srv://sesp:ptHa2PLMHQHjAQFG@myfirstcluster.8p9t6.mongodb.net/Bases2?retryWrites=true&w=majority";
                 this.clientURI = new MongoClientURI(uri);
                 this.mongoClient = new MongoClient(clientURI);
                 this.mongoDatabase = mongoClient.getDatabase("learn");
@@ -37,4 +35,6 @@ public class Mongo {
         public void guardarMongo (Document documento) {
                  this.collection.insertOne(documento);
         }
+
+
     }

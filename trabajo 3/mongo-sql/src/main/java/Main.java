@@ -1,22 +1,14 @@
-import java.sql.*;
-
-import classes.Inicio;
 import classes.MongoConnection;
+import classes.Inicio;
 import classes.SqlGenerator;
-import models.MongoClass;
+import ModelsM.BusquedaMongo;
 
 public class Main {
     public static void main(String[] args) {
 
-        MongoConnection connMongo = new MongoConnection();
-        SqlGenerator generador = new SqlGenerator();
+        //BusquedaMongo busqueda = new BusquedaMongo(connMongo.collection);
 
-        var estadisticas = generador.generarEstadisticas();
-
-        //Pasar estadisticas a mongo
-        connMongo.guardarListadoMongoClass(estadisticas);
-
-        // new Inicio();
+        new Inicio();
 
         // connMongo.guardarDocumento();
 

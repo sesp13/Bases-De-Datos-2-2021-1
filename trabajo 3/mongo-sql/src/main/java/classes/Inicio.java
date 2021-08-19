@@ -3,6 +3,7 @@ package classes;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import ModelsM.*;
 
 public class Inicio implements ActionListener{
 
@@ -45,13 +46,29 @@ public class Inicio implements ActionListener{
     public void actionPerformed(ActionEvent e){
         frame.dispose();
         if(e.getSource()==generar){
-            //Generar
+            //se utiliza este constructor para que borre la base de datos de mongo previa
+            MongoConnection connMongo = new MongoConnection("nuevo");
+            SqlGenerator generador = new SqlGenerator();
+
+            var estadisticas = generador.generarEstadisticas();
+            
+            //Pasar estadisticas a mongo
+            connMongo.guardarListadoMongoClass(estadisticas);
+            
+            
+            generador.generarHistorico();
+            Inicio inicio = new Inicio();
+
         }
         else if(e.getSource()==visualizar){
-            Visualizar Visualizar = new Visualizar();
+            MongoConnection connMongo = new MongoConnection();
+            BusquedaMongo busqueda = new BusquedaMongo(connMongo.collection);
+            Visualizar visualizar = new Visualizar();
         }
         else if(e.getSource()==vaciar){
-            //registroGanancia registroGanancia = new registroGanancia();//Vaciar
+            SqlGenerator generador = new SqlGenerator();
+            generador.generarHistorico();
+            Inicio inicio = new Inicio();
         }
     }
 }

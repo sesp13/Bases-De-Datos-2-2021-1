@@ -70,6 +70,27 @@ public class VentasController {
         }
     }
 
+    public Boolean reiniciarVentas(){
+        var consulta = "UPDATE empleado SET ventas = vent_varray()";
+
+        Boolean resultado = false;
+
+        try {
+            Statement sentencia = conn.createStatement();
+            sentencia.executeQuery(consulta);
+
+            resultado = true;
+
+            return resultado;
+
+        } catch (Exception e) {
+            System.out.println("Error reiniciando las ventas de los empleados " + e.getMessage());
+            return null;
+        }
+
+    }
+
+
     public String getEmpleadoConMasVentas(Number codCiudad) {
         var consulta = String.join("", "SELECT * FROM ", "( ", "SELECT ", "e.cc as cc, ",
                 "SUM((v.miprod.precio_unitario) * v.nro_unidades) AS total ", "FROM empleado e, TABLE(e.ventas) v ",
@@ -83,7 +104,7 @@ public class VentasController {
             Statement sentencia = conn.createStatement();
             ResultSet querie = sentencia.executeQuery(consulta);
 
-            String resultado = null;
+            String resultado = "null";
 
             while (querie.next()) {
                 resultado = String.format("cc: %s, total: %s", querie.getString("cc"), querie.getFloat("total"));
