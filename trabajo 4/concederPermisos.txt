@@ -1,0 +1,13 @@
+Hola,
+
+si al prender el autotrace les sale el mensaje: 
+SP2-0618: Cannot find the Session Identifier.  Check PLUSTRACE role is enabled
+SP2-0611: Error enabling STATISTICS report
+
+Entonces se conectan así:
+conn SYS AS SYSDBA
+le dan el password y luego:
+grant plustrace to public;
+
+Y ya con esto al prender el autotrace (en mi caso con el usuario gato),
+ya mostrará unas estadísticas adicionales luego del plan.

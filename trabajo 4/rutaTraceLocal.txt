@@ -1,0 +1,8 @@
+C:\oraclexe\app\oracle\diag\rdbms\xe\xe\trace
+
+Comando para generar tkprof
+cd C:\oraclexe\app\oracle\diag\rdbms\xe\xe\trace
+tkprof xe_ora_1332.trc C:\Users\Santiago\archivo.txt
+
+Ruta completa
+C:\oraclexe\app\oracle\diag\rdbms\xe\xe\trace>tkprof xe_ora_1332.trc C:\Users\Santiago\archivo.txt
