@@ -1,0 +1,141 @@
+
+TKPROF: Release 11.2.0.2.0 - Development on Jue Sep 2 23:06:33 2021
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+Trace file: xe_ora_13220.trc
+Sort options: default
+
+********************************************************************************
+count    = number of times OCI procedure was executed
+cpu      = cpu time in seconds executing 
+elapsed  = elapsed time in seconds executing
+disk     = number of physical reads of buffers from disk
+query    = number of buffers gotten for consistent read
+current  = number of buffers gotten in current mode (usually for update)
+rows     = number of rows processed by the fetch or execute call
+********************************************************************************
+
+SQL ID: 2745x293wc1qu Plan Hash: 0
+
+ALTER SESSION SET SQL_TRACE TRUE
+
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        0      0.00       0.00          0          0          0           0
+Execute      1      0.00       0.00          0          0          0           0
+Fetch        0      0.00       0.00          0          0          0           0
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total        1      0.00       0.00          0          0          0           0
+
+Misses in library cache during parse: 0
+Misses in library cache during execute: 1
+Optimizer mode: ALL_ROWS
+Parsing user id: 48  
+********************************************************************************
+
+SELECT /*+ FULL(c) FULL(f) FULL(d)  */ *
+FROM cliente c, factura f, detalle d
+WHERE c.cedula = f.cecliente AND f.codigof = d.codfact
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        1      0.00       0.00          0          0          0           0
+Execute      1      0.00       0.00          0          0          0           0
+Fetch     5335      0.20       0.15          0       7327          0       80000
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total     5337      0.20       0.15          0       7327          0       80000
+
+Misses in library cache during parse: 0
+Optimizer mode: ALL_ROWS
+Parsing user id: 48  
+Number of plan statistics captured: 1
+
+Rows (1st) Rows (avg) Rows (max)  Row Source Operation
+---------- ---------- ----------  ---------------------------------------------------
+     80000      80000      80000  HASH JOIN  (cr=7327 pr=0 pw=0 time=128806 us cost=554 size=6300000 card=50000)
+     30000      30000      30000   TABLE ACCESS FULL CLIENTE (cr=1024 pr=0 pw=0 time=1191 us cost=278 size=670000 card=10000)
+     80000      80000      80000   HASH JOIN  (cr=6303 pr=0 pw=0 time=87869 us cost=275 size=2950000 card=50000)
+     60000      60000      60000    TABLE ACCESS FULL FACTURA (cr=308 pr=0 pw=0 time=3458 us cost=84 size=300000 card=20000)
+     80000      80000      80000    TABLE ACCESS FULL DETALLE (cr=5995 pr=0 pw=0 time=46440 us cost=190 size=2200000 card=50000)
+
+********************************************************************************
+
+SELECT /*+ USE_MERGE(c f) USE_MERGE(d)  */ *
+FROM cliente c, factura f, detalle d
+WHERE c.cedula = f.cecliente AND f.codigof = d.codfact
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        1      0.00       0.00          0          0          0           0
+Execute      1      0.00       0.00          0          0          0           0
+Fetch     5335      0.18       0.12          0       1023          0       80000
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total     5337      0.18       0.12          0       1023          0       80000
+
+Misses in library cache during parse: 0
+Optimizer mode: ALL_ROWS
+Parsing user id: 48  
+Number of plan statistics captured: 1
+
+Rows (1st) Rows (avg) Rows (max)  Row Source Operation
+---------- ---------- ----------  ---------------------------------------------------
+     80000      80000      80000  MERGE JOIN  (cr=1023 pr=0 pw=0 time=96453 us cost=1448 size=6300000 card=50000)
+       854        854        854   SORT JOIN (cr=325 pr=0 pw=0 time=27213 us cost=695 size=1640000 card=20000)
+     60000      60000      60000    MERGE JOIN  (cr=325 pr=0 pw=0 time=22739 us cost=310 size=1640000 card=20000)
+      1207       1207       1207     TABLE ACCESS BY INDEX ROWID CLIENTE (cr=17 pr=0 pw=0 time=739 us cost=119 size=670000 card=10000)
+      1207       1207       1207      INDEX FULL SCAN SYS_C007543 (cr=4 pr=0 pw=0 time=253 us cost=19 size=0 card=10000)(object id 23892)
+     60000      60000      60000     SORT JOIN (cr=308 pr=0 pw=0 time=16268 us cost=191 size=300000 card=20000)
+     60000      60000      60000      TABLE ACCESS FULL FACTURA (cr=308 pr=0 pw=0 time=3627 us cost=84 size=300000 card=20000)
+     80000      80000      80000   SORT JOIN (cr=698 pr=0 pw=0 time=59750 us cost=753 size=2200000 card=50000)
+     80000      80000      80000    TABLE ACCESS FULL DETALLE (cr=698 pr=0 pw=0 time=4506 us cost=190 size=2200000 card=50000)
+
+
+
+
+********************************************************************************
+
+OVERALL TOTALS FOR ALL NON-RECURSIVE STATEMENTS
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        2      0.00       0.00          0          0          0           0
+Execute      3      0.00       0.00          0          0          0           0
+Fetch    10670      0.39       0.28          0       8350          0      160000
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total    10675      0.39       0.28          0       8350          0      160000
+
+Misses in library cache during parse: 0
+Misses in library cache during execute: 1
+
+
+OVERALL TOTALS FOR ALL RECURSIVE STATEMENTS
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        0      0.00       0.00          0          0          0           0
+Execute      0      0.00       0.00          0          0          0           0
+Fetch        0      0.00       0.00          0          0          0           0
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total        0      0.00       0.00          0          0          0           0
+
+Misses in library cache during parse: 0
+
+    3  user  SQL statements in session.
+    0  internal SQL statements in session.
+    3  SQL statements in session.
+********************************************************************************
+Trace file: xe_ora_13220.trc
+Trace file compatibility: 11.1.0.7
+Sort options: default
+
+       1  session in tracefile.
+       3  user  SQL statements in trace file.
+       0  internal SQL statements in trace file.
+       3  SQL statements in trace file.
+       3  unique SQL statements in trace file.
+   11116  lines in trace file.
+     243  elapsed seconds in trace file.
+
+
