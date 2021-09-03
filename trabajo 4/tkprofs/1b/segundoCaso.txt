@@ -1,0 +1,220 @@
+
+TKPROF: Release 11.2.0.2.0 - Development on Vie Sep 3 00:50:43 2021
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+Trace file: xe_ora_25052.trc
+Sort options: default
+
+********************************************************************************
+count    = number of times OCI procedure was executed
+cpu      = cpu time in seconds executing 
+elapsed  = elapsed time in seconds executing
+disk     = number of physical reads of buffers from disk
+query    = number of buffers gotten for consistent read
+current  = number of buffers gotten in current mode (usually for update)
+rows     = number of rows processed by the fetch or execute call
+********************************************************************************
+
+SQL ID: 2745x293wc1qu Plan Hash: 0
+
+ALTER SESSION SET SQL_TRACE TRUE
+
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        0      0.00       0.00          0          0          0           0
+Execute      1      0.00       0.00          0          0          0           0
+Fetch        0      0.00       0.00          0          0          0           0
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total        1      0.00       0.00          0          0          0           0
+
+Misses in library cache during parse: 0
+Misses in library cache during execute: 1
+Optimizer mode: ALL_ROWS
+Parsing user id: 48  
+********************************************************************************
+
+SQL ID: gn175x1rxqjbg Plan Hash: 650992256
+
+SELECT /* OPT_DYN_SAMP */ /*+ ALL_ROWS IGNORE_WHERE_CLAUSE 
+  NO_PARALLEL(SAMPLESUB) opt_param('parallel_execution_enabled', 'false') 
+  NO_PARALLEL_INDEX(SAMPLESUB) NO_SQL_TUNE */ NVL(SUM(C1),:"SYS_B_0"), 
+  NVL(SUM(C2),:"SYS_B_1"), COUNT(DISTINCT C3), NVL(SUM(CASE WHEN C3 IS NULL 
+  THEN :"SYS_B_2" ELSE :"SYS_B_3" END),:"SYS_B_4") 
+FROM
+ (SELECT /*+ NO_PARALLEL("C") FULL("C") NO_PARALLEL_INDEX("C") */ :"SYS_B_5" 
+  AS C1, :"SYS_B_6" AS C2, "C"."CEDULA" AS C3 FROM "ADMIN"."CLIENTE" SAMPLE 
+  BLOCK (:"SYS_B_7" , :"SYS_B_8") SEED (:"SYS_B_9") "C") SAMPLESUB
+
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        1      0.00       0.00          0          0          0           0
+Execute      1      0.00       0.00          0          0          0           0
+Fetch        1      0.00       0.00          0         70          0           1
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total        3      0.00       0.00          0         70          0           1
+
+Misses in library cache during parse: 1
+Misses in library cache during execute: 1
+Optimizer mode: ALL_ROWS
+Parsing user id: 48     (recursive depth: 1)
+Number of plan statistics captured: 1
+
+Rows (1st) Rows (avg) Rows (max)  Row Source Operation
+---------- ---------- ----------  ---------------------------------------------------
+         1          1          1  SORT AGGREGATE (cr=70 pr=0 pw=0 time=3139 us)
+      6513       6513       6513   VIEW  VW_DAG_0 (cr=70 pr=0 pw=0 time=3576 us cost=3 size=663 card=17)
+      6513       6513       6513    HASH GROUP BY (cr=70 pr=0 pw=0 time=2935 us cost=3 size=425 card=17)
+      6513       6513       6513     TABLE ACCESS SAMPLE CLIENTE (cr=70 pr=0 pw=0 time=403 us cost=2 size=425 card=17)
+
+********************************************************************************
+
+SQL ID: dbdkafvmgnhuw Plan Hash: 1236140302
+
+SELECT /* OPT_DYN_SAMP */ /*+ ALL_ROWS IGNORE_WHERE_CLAUSE 
+  NO_PARALLEL(SAMPLESUB) opt_param('parallel_execution_enabled', 'false') 
+  NO_PARALLEL_INDEX(SAMPLESUB) NO_SQL_TUNE */ NVL(SUM(C1),:"SYS_B_00"), 
+  NVL(SUM(C2),:"SYS_B_01"), COUNT(DISTINCT C3), NVL(SUM(CASE WHEN C3 IS NULL 
+  THEN :"SYS_B_02" ELSE :"SYS_B_03" END),:"SYS_B_04"), COUNT(DISTINCT C4), 
+  NVL(SUM(CASE WHEN C4 IS NULL THEN :"SYS_B_05" ELSE :"SYS_B_06" END),
+  :"SYS_B_07") 
+FROM
+ (SELECT /*+ NO_PARALLEL("F") FULL("F") NO_PARALLEL_INDEX("F") */ :"SYS_B_08" 
+  AS C1, :"SYS_B_09" AS C2, "F"."CODIGOF" AS C3, "F"."CECLIENTE" AS C4 FROM 
+  "ADMIN"."FACTURA" SAMPLE BLOCK (:"SYS_B_10" , :"SYS_B_11") SEED 
+  (:"SYS_B_12") "F") SAMPLESUB
+
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        1      0.00       0.00          0          0          0           0
+Execute      1      0.00       0.00          0          0          0           0
+Fetch        1      0.01       0.01          0         59          0           1
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total        3      0.01       0.01          0         59          0           1
+
+Misses in library cache during parse: 1
+Misses in library cache during execute: 1
+Optimizer mode: ALL_ROWS
+Parsing user id: 48     (recursive depth: 1)
+Number of plan statistics captured: 1
+
+Rows (1st) Rows (avg) Rows (max)  Row Source Operation
+---------- ---------- ----------  ---------------------------------------------------
+         1          1          1  SORT GROUP BY (cr=59 pr=0 pw=0 time=11277 us)
+     18753      18753      18753   TABLE ACCESS SAMPLE FACTURA (cr=59 pr=0 pw=0 time=1162 us cost=2 size=1102 card=29)
+
+********************************************************************************
+
+SQL ID: c4wum19gh3h6f Plan Hash: 2804549474
+
+SELECT /* OPT_DYN_SAMP */ /*+ ALL_ROWS IGNORE_WHERE_CLAUSE 
+  NO_PARALLEL(SAMPLESUB) opt_param('parallel_execution_enabled', 'false') 
+  NO_PARALLEL_INDEX(SAMPLESUB) NO_SQL_TUNE */ NVL(SUM(C1),:"SYS_B_0"), 
+  NVL(SUM(C2),:"SYS_B_1"), COUNT(DISTINCT C3), NVL(SUM(CASE WHEN C3 IS NULL 
+  THEN :"SYS_B_2" ELSE :"SYS_B_3" END),:"SYS_B_4") 
+FROM
+ (SELECT /*+ NO_PARALLEL("D") FULL("D") NO_PARALLEL_INDEX("D") */ :"SYS_B_5" 
+  AS C1, :"SYS_B_6" AS C2, "D"."CODFACT" AS C3 FROM "ADMIN"."DETALLE" SAMPLE 
+  BLOCK (:"SYS_B_7" , :"SYS_B_8") SEED (:"SYS_B_9") "D") SAMPLESUB
+
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        1      0.00       0.00          0          0          0           0
+Execute      1      0.00       0.00          0          0          0           0
+Fetch        1      0.00       0.00          0         61          0           1
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total        3      0.00       0.00          0         61          0           1
+
+Misses in library cache during parse: 1
+Misses in library cache during execute: 1
+Optimizer mode: ALL_ROWS
+Parsing user id: 48     (recursive depth: 1)
+Number of plan statistics captured: 1
+
+Rows (1st) Rows (avg) Rows (max)  Row Source Operation
+---------- ---------- ----------  ---------------------------------------------------
+         1          1          1  SORT AGGREGATE (cr=61 pr=0 pw=0 time=1505 us)
+        51         51         51   VIEW  VW_DAG_0 (cr=61 pr=0 pw=0 time=1476 us cost=3 size=351 card=9)
+        51         51         51    HASH GROUP BY (cr=61 pr=0 pw=0 time=1475 us cost=3 size=225 card=9)
+      8238       8238       8238     TABLE ACCESS SAMPLE DETALLE (cr=61 pr=0 pw=0 time=643 us cost=2 size=225 card=9)
+
+********************************************************************************
+
+SELECT /*+ FULL(c) FULL(f) FULL(d)  */ *
+FROM cliente c, factura f, detalle d
+WHERE c.cedula = f.cecliente AND f.codigof = d.codfact
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        1      0.00       0.00          0          6          0           0
+Execute      1      0.00       0.00          0          0          0           0
+Fetch     5335      0.17       0.12          0       1067          0       80000
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total     5337      0.17       0.12          0       1073          0       80000
+
+Misses in library cache during parse: 1
+Optimizer mode: ALL_ROWS
+Parsing user id: 48  
+Number of plan statistics captured: 1
+
+Rows (1st) Rows (avg) Rows (max)  Row Source Operation
+---------- ---------- ----------  ---------------------------------------------------
+     80000      80000      80000  HASH JOIN  (cr=1067 pr=0 pw=0 time=49920 us cost=1111 size=12708488 card=71396)
+     80000      80000      80000   TABLE ACCESS FULL DETALLE (cr=550 pr=0 pw=0 time=6539 us cost=151 size=4640740 card=71396)
+     60000      60000      60000   HASH JOIN  (cr=517 pr=0 pw=0 time=15370 us cost=388 size=5953631 card=52687)
+     60000      60000      60000    TABLE ACCESS FULL FACTURA (cr=181 pr=0 pw=0 time=3339 us cost=50 size=1844045 card=52687)
+     30000      30000      30000    TABLE ACCESS FULL CLIENTE (cr=336 pr=0 pw=0 time=2559 us cost=84 size=2459418 card=31531)
+
+
+
+
+********************************************************************************
+
+OVERALL TOTALS FOR ALL NON-RECURSIVE STATEMENTS
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        1      0.00       0.00          0          6          0           0
+Execute      2      0.00       0.00          0          0          0           0
+Fetch     5335      0.17       0.12          0       1067          0       80000
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total     5338      0.17       0.12          0       1073          0       80000
+
+Misses in library cache during parse: 1
+Misses in library cache during execute: 1
+
+
+OVERALL TOTALS FOR ALL RECURSIVE STATEMENTS
+
+call     count       cpu    elapsed       disk      query    current        rows
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+Parse        3      0.00       0.00          0          0          0           0
+Execute      3      0.00       0.00          0          0          0           0
+Fetch        3      0.01       0.01          0        190          0           3
+------- ------  -------- ---------- ---------- ---------- ----------  ----------
+total        9      0.01       0.01          0        190          0           3
+
+Misses in library cache during parse: 3
+Misses in library cache during execute: 3
+
+    5  user  SQL statements in session.
+    0  internal SQL statements in session.
+    5  SQL statements in session.
+********************************************************************************
+Trace file: xe_ora_25052.trc
+Trace file compatibility: 11.1.0.7
+Sort options: default
+
+       1  session in tracefile.
+       5  user  SQL statements in trace file.
+       0  internal SQL statements in trace file.
+       5  SQL statements in trace file.
+       5  unique SQL statements in trace file.
+    5649  lines in trace file.
+     130  elapsed seconds in trace file.
+
+
