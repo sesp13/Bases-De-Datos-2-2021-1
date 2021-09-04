@@ -2,7 +2,7 @@ Abrir esto en una terminal diferente a la de sql
 
 Comando para generar tkprof
 cd C:\oraclexe\app\oracle\diag\rdbms\xe\xe\trace
-tkprof xe_ora_8672.trc C:\Users\Santiago\archivo.txt
+tkprof xe_ora_27128.trc C:\Users\Santiago\archivo.txt
 
 Ruta completa
 C:\oraclexe\app\oracle\diag\rdbms\xe\xe\trace>tkprof xe_ora_1332.trc C:\Users\Santiago\archivo.txt
