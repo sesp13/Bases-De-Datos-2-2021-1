@@ -1,0 +1,15 @@
+--Caso 4 1.000.000 registros
+BEGIN
+FOR i IN 1..1000000 LOOP
+  INSERT INTO numero
+  VALUES
+  (
+    TRUNC(DBMS_RANDOM.value(1,100000000)),
+    TRUNC(DBMS_RANDOM.value(1,100000000)),
+    TRUNC(DBMS_RANDOM.value(1,100000000)),
+    TRUNC(DBMS_RANDOM.value(1,100000000))
+  );
+END LOOP;
+commit;
+END;
+/
