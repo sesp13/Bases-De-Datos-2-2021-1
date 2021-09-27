@@ -32,7 +32,7 @@ public class MongoConnection {
         this.uri =
                 "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false";
         // Atlas
-        //this.uri = "mongodb+srv://userCursoNode:ptHa2PLMHQHjAQFG@myfirstcluster.8p9t6.mongodb.net/Bases2?retryWrites=true&w=majority";
+        
         this.clientURI = new MongoClientURI(uri);
         this.mongoClient = new MongoClient(clientURI);
         this.mongoDatabase = mongoClient.getDatabase("Bases2");
@@ -46,7 +46,7 @@ public class MongoConnection {
         this.uri =
                 "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false";
         // Atlas
-        //this.uri = "mongodb+srv://userCursoNode:ptHa2PLMHQHjAQFG@myfirstcluster.8p9t6.mongodb.net/Bases2?retryWrites=true&w=majority";
+        
         this.clientURI = new MongoClientURI(uri);
         this.mongoClient = new MongoClient(clientURI);
         this.mongoDatabase = mongoClient.getDatabase("Bases2");
